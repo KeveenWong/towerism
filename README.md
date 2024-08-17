@@ -1,3 +1,4 @@
 GMTK Game Jam 2024!
 
-![image](https://github.com/user-attachments/assets/f52e668c-28b9-4a20-a8cc-c3d3d89c1f49)
+![image](https://github.com/user-attachments/assets/18304903-75fc-428c-854b-913f603134a6)
+
