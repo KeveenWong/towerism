@@ -1,19 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=13 format=3 uid="uid://cjrlak0o7miux"]
 
-[ext_resource type="Script" path="res://scenes/main.gd" id="1_fhbw8"]
-[ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
-[ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="1_yjpfe"]
-[ext_resource type="Texture2D" uid="uid://4xpc4h3kxtxy" path="res://assets/sprites/background/clouds-x3.png" id="2_0e6ux"]
-[ext_resource type="Texture2D" uid="uid://r5e1h18qsf5w" path="res://assets/sprites/background/mountain_x3.png" id="2_0hsqc"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="3_vwnj8"]
-[ext_resource type="Texture2D" uid="uid://d1rx1rn8p6pu0" path="res://assets/sprites/background/far_woods_x3.png" id="3_w25gq"]
-[ext_resource type="Texture2D" uid="uid://blqd8tblga3gc" path="res://assets/sprites/background/country-platform_x3.png" id="4_5e2t8"]
-[ext_resource type="Texture2D" uid="uid://cl51mb1ulfgty" path="res://assets/sprites/character_assets.png" id="6_j2qew"]
-[ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="9_4ndxe"]
-[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemy.tscn" id="10_pxc33"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
-size = Vector2(2212, 66)
+[ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="1_ch71i"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="2_fu4k0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/AnimationSheet_Character.png" id="3_ikisg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24dju"]
 
@@ -29,7 +18,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -58,7 +47,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -87,7 +76,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -116,7 +105,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -145,7 +134,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -175,7 +164,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_j2qew")]
+"values": [ExtResource("3_ikisg")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -200,85 +189,30 @@ _data = {
 "run": SubResource("Animation_0em4m")
 }
 
-[node name="Castle Game" type="Node2D"]
-position = Vector2(3, -151)
-script = ExtResource("1_fhbw8")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
+size = Vector2(167, 66)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(1, 27)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(662, -2343.5)
-scale = Vector2(11.2969, 24.058)
-texture = ExtResource("1_l83v8")
-
-[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(1, -359)
-motion_scale = Vector2(0.02, 1)
-motion_mirroring = Vector2(1152, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
-texture_filter = 1
-position = Vector2(1, 66)
-texture = ExtResource("2_0e6ux")
-centered = false
-
-[node name="Mountain" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(1, -359)
-motion_scale = Vector2(0.1, 1)
-motion_mirroring = Vector2(1152, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Mountain"]
-texture_filter = 1
-position = Vector2(1, 93)
-texture = ExtResource("2_0hsqc")
-centered = false
-
-[node name="Forest" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(1, -359)
-motion_scale = Vector2(0.2, 1)
-motion_mirroring = Vector2(1152.06, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Forest"]
-texture_filter = 1
-position = Vector2(575, 243)
-texture = ExtResource("3_w25gq")
-
-[node name="Floor" type="ParallaxLayer" parent="ParallaxBackground"]
-texture_filter = 1
-position = Vector2(1, -359)
-motion_mirroring = Vector2(1151.69, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Floor"]
-position = Vector2(-1, 135)
-texture = ExtResource("4_5e2t8")
-centered = false
+[node name="Node2D" type="Node2D"]
 
 [node name="Castle-tower-pixel-free-vector" type="Sprite2D" parent="."]
-position = Vector2(155, -78)
+position = Vector2(645, 480)
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("1_yjpfe")
-
-[node name="Platform" type="StaticBody2D" parent="."]
-position = Vector2(-8, -41)
-
-[node name="Platform" type="CollisionShape2D" parent="Platform"]
-position = Vector2(1112, 191)
-shape = SubResource("RectangleShape2D_k4byv")
+texture = ExtResource("1_ch71i")
 
 [node name="Player" type="CharacterBody2D" parent="."]
-texture_filter = 1
-position = Vector2(-8, -41)
-script = ExtResource("3_vwnj8")
+position = Vector2(481, 500)
+script = ExtResource("2_fu4k0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture_filter = 1
 position = Vector2(162, 135)
-texture = ExtResource("6_j2qew")
+texture = ExtResource("3_ikisg")
 hframes = 8
 vframes = 9
+
+[node name="Camera2D" type="Camera2D" parent="Player/Sprite2D"]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(162, 137)
@@ -290,26 +224,14 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(162, 135)
-zoom = Vector2(0.3, 0.3)
-process_callback = 0
-limit_bottom = 0
-position_smoothing_enabled = true
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2(481, 500)
 
-[node name="Turret" parent="." instance=ExtResource("9_4ndxe")]
-position = Vector2(157, -136)
+[node name="Platform" type="CollisionShape2D" parent="Platform"]
+position = Vector2(180.25, 185)
+shape = SubResource("RectangleShape2D_k4byv")
 
-[node name="Enemy" parent="." instance=ExtResource("10_pxc33")]
-position = Vector2(416, 101)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
-
-[node name="MoneyLabel" type="Label" parent="CanvasLayer"]
-offset_left = 311.0
-offset_top = -170.0
-offset_right = 391.0
-offset_bottom = -147.0
-text = "Money: $0"
-metadata/_edit_use_anchors_ = true
+[node name="Platform2" type="Sprite2D" parent="Platform"]
+position = Vector2(178.75, 178)
+scale = Vector2(0.412628, 0.089796)
+texture = ExtResource("1_ch71i")
