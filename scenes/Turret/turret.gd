@@ -3,7 +3,7 @@ extends Node2D
 @export var Bullet: PackedScene
 @export var fire_rate: float = 0.2
 @export var bullet_speed: float = 1000.0
-@export var barrel_length: float = 50.0  # Adjust based on your sprite
+@export var barrel_length: float = 50.0
 
 var can_fire = true
 var timer: Timer
