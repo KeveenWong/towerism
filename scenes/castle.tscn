@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfddndby1ecnx"]
+
+[ext_resource type="Script" path="res://castle.gd" id="1_21s5g"]
+[ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="2_8a5us"]
+
+[node name="Castle" type="Node2D"]
+script = ExtResource("1_21s5g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(159, -32)
+scale = Vector2(0.435587, 0.435587)
+texture = ExtResource("2_8a5us")
+
+[node name="FloorContainer" type="Node2D" parent="."]

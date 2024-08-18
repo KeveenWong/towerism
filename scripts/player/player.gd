@@ -11,6 +11,11 @@ extends CharacterBody2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+# camera zoom options
+var zoom_speed = 0.05
+var min_zoom = 0.3
+var max_zoom = 1
+
 #func _ready():
 	#setup_animations()
 
@@ -22,6 +27,7 @@ func _physics_process(delta):
 	handle_movement(delta, input_dir)
 	move_and_slide()
 	update_animations(input_dir)
+	zoom(delta)
 
 func apply_gravity(delta):
 	if not is_on_floor():
@@ -51,3 +57,14 @@ func update_animations(input_dir):
 			ap.play("jump")
 		elif velocity.y > 0: 
 			ap.play("fall")
+			
+func zoom(delta):
+	if Input.is_action_just_released("zoom_in"):
+		zoom_camera(zoom_speed)
+	elif Input.is_action_just_released("zoom_out"):
+		zoom_camera(-zoom_speed)
+		
+func zoom_camera(zoom_factor):
+	var new_zoom = $Camera2D.zoom.x + zoom_factor
+	new_zoom = clamp(new_zoom, min_zoom, max_zoom)
+	$Camera2D.zoom = Vector2(new_zoom, new_zoom)

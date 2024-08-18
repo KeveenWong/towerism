@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl51mb1ulfgty"
-path="res://.godot/imported/AnimationSheet_Character.png-b127d114e416633b84a72b131ca39fbc.ctex"
+uid="uid://r5e1h18qsf5w"
+path="res://.godot/imported/mountain_x3.png-e40766419f89d99f8e609599858afda3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/AnimationSheet_Character.png"
-dest_files=["res://.godot/imported/AnimationSheet_Character.png-b127d114e416633b84a72b131ca39fbc.ctex"]
+source_file="res://assets/sprites/background/mountain_x3.png"
+dest_files=["res://.godot/imported/mountain_x3.png-e40766419f89d99f8e609599858afda3.ctex"]
 
 [params]
 
