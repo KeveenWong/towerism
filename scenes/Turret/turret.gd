@@ -1,0 +1,40 @@
+extends Node2D
+
+@export var Bullet: PackedScene
+@export var fire_rate: float = 0.2
+@export var bullet_speed: float = 1000.0
+@export var barrel_length: float = 50.0  # Adjust based on your sprite
+
+var can_fire = true
+var timer: Timer
+
+func _ready():
+	timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = fire_rate
+	timer.timeout.connect(on_timeout_complete)
+	add_child(timer)
+	
+	# Check if "fire" action exists
+	if not InputMap.has_action("fire"):
+		print("Warning: 'fire' action is not defined in the InputMap")
+
+func _process(delta):
+	look_at(get_global_mouse_position())
+	
+	if Input.is_action_pressed("fire") and can_fire:
+		shoot()
+
+func shoot():
+	can_fire = false
+	timer.start()
+	
+	var bullet = Bullet.instantiate()
+	var spawn_point = Vector2(barrel_length, 0).rotated(rotation)
+	bullet.position = global_position + spawn_point
+	bullet.rotation = rotation
+	bullet.linear_velocity = Vector2(bullet_speed, 0).rotated(rotation)
+	get_parent().add_child(bullet)
+
+func on_timeout_complete():
+	can_fire = true

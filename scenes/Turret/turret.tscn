@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dirc752pdlvja"]
+
+[ext_resource type="Script" path="res://scenes/Turret/turret.gd" id="1_6ghuy"]
+[ext_resource type="PackedScene" uid="uid://du3gthmuuaot" path="res://scenes/Turret/bullet.tscn" id="2_6v3eq"]
+[ext_resource type="Texture2D" uid="uid://blg82a1ip7p22" path="res://assets/Trap and Weapon/00 Gun.png" id="2_kbxrt"]
+
+[node name="Turret" type="Node2D"]
+script = ExtResource("1_6ghuy")
+Bullet = ExtResource("2_6v3eq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_kbxrt")
+flip_h = true
+hframes = 4
+vframes = 4
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(-40, 0)

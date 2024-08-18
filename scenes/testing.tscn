@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgl7pjr2dyq0j"]
+
+[ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="1_cwm7r"]
+
+[node name="Testing" type="Node2D"]
+
+[node name="Turret" parent="." instance=ExtResource("1_cwm7r")]
+position = Vector2(150, 80)
