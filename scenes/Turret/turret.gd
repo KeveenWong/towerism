@@ -30,11 +30,11 @@ func shoot():
 	timer.start()
 	
 	var bullet = Bullet.instantiate()
-	var spawn_point = Vector2(barrel_length, 0).rotated(rotation)
-	bullet.position = global_position + spawn_point
-	bullet.rotation = rotation
-	bullet.linear_velocity = Vector2(bullet_speed, 0).rotated(rotation)
-	get_parent().add_child(bullet)
+	var spawn_point = global_position + Vector2(barrel_length, 0).rotated(global_rotation)
+	bullet.global_position = spawn_point
+	bullet.global_rotation = global_rotation
+	bullet.linear_velocity = Vector2(bullet_speed, 0).rotated(global_rotation)
+	get_tree().root.add_child(bullet)
 
 func on_timeout_complete():
 	can_fire = true

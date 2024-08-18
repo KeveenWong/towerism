@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=21 format=3 uid="uid://k64plrsd8f6w"]
 
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_fhbw8"]
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
 [ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="1_yjpfe"]
 [ext_resource type="Texture2D" uid="uid://4xpc4h3kxtxy" path="res://assets/sprites/background/clouds-x3.png" id="2_0e6ux"]
@@ -8,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://d1rx1rn8p6pu0" path="res://assets/sprites/background/far_woods_x3.png" id="3_w25gq"]
 [ext_resource type="Texture2D" uid="uid://blqd8tblga3gc" path="res://assets/sprites/background/country-platform_x3.png" id="4_5e2t8"]
 [ext_resource type="Texture2D" uid="uid://cl51mb1ulfgty" path="res://assets/sprites/character_assets.png" id="6_j2qew"]
+[ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="9_4ndxe"]
+[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemy.tscn" id="10_pxc33"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
 size = Vector2(2212, 66)
@@ -199,6 +202,7 @@ _data = {
 
 [node name="Castle Game" type="Node2D"]
 position = Vector2(3, -151)
+script = ExtResource("1_fhbw8")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -292,3 +296,20 @@ zoom = Vector2(0.3, 0.3)
 process_callback = 0
 limit_bottom = 0
 position_smoothing_enabled = true
+
+[node name="Turret" parent="." instance=ExtResource("9_4ndxe")]
+position = Vector2(157, -136)
+
+[node name="Enemy" parent="." instance=ExtResource("10_pxc33")]
+position = Vector2(416, 101)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer"]
+offset_left = 311.0
+offset_top = -170.0
+offset_right = 391.0
+offset_bottom = -147.0
+text = "Money: $0"
+metadata/_edit_use_anchors_ = true

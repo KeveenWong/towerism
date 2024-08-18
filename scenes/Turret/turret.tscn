@@ -15,4 +15,4 @@ hframes = 4
 vframes = 4
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(-40, 0)
+position = Vector2(39, 2)
