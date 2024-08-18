@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgl7pjr2dyq0j"]
+
+[ext_resource type="Script" path="res://scenes/testing.gd" id="1_6v2s3"]
+[ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="1_cwm7r"]
+[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemy.tscn" id="3_g0f8a"]
+
+[node name="Testing" type="Node2D"]
+script = ExtResource("1_6v2s3")
+
+[node name="Turret" parent="." instance=ExtResource("1_cwm7r")]
+position = Vector2(150, 80)
+
+[node name="Enemy" parent="." instance=ExtResource("3_g0f8a")]
+position = Vector2(264, 142)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer"]
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 84.0
+offset_bottom = 28.0
+text = "Money: $0"
+metadata/_edit_use_anchors_ = true
