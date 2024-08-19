@@ -18,7 +18,9 @@ var current_floor: int = 1
 @onready var floor_container = $FloorContainer
 @export var floor_scene: PackedScene
 @export var castle_top_scene: PackedScene
+@export var smoke_effect_scene: PackedScene
 var castle_top_instance: Node = null
+var initial_setup_complete = false
 
 func _ready():
 	# Clear any existing floors and castle top that might be in the scene
@@ -30,6 +32,8 @@ func _ready():
 	
 	# Add the castle top
 	add_castle_top()
+	
+	initial_setup_complete = true
 
 func add_floor(level: int):
 	if level in floors:
@@ -49,6 +53,10 @@ func _instantiate_floor(floor: Floor):
 	floor.instance.position.y = -(floor.level - 1) * FLOOR_HEIGHT
 	
 	assert(floor.instance.has_node("PlayerSpawnPoint"), "Floor scene is missing PlayerSpawnPoint!")
+	
+	# Play smoke effect
+	play_smoke_effect(floor.instance.position)
+	print("Floor ", floor.level, " position: ", floor.instance.global_position)  # Debug print
 
 func add_castle_top():
 	if castle_top_instance:
@@ -57,13 +65,40 @@ func add_castle_top():
 	castle_top_instance = castle_top_scene.instantiate()
 	add_child(castle_top_instance)
 	update_castle_top_position()
+	
+	# Play smoke effect for castle top
+	play_smoke_effect(Vector2(0, castle_top_instance.position.y - floor_container.position.y))
+
+	
+func play_smoke_effect(position: Vector2):
+	if smoke_effect_scene:
+		var smoke = smoke_effect_scene.instantiate()
+		add_child(smoke)
+		
+		# Calculate global position based on the floor_container's global position
+		var global_pos = floor_container.global_position + position
+		
+		# Adjust for any offset in your smoke effect scene
+		var smoke_offset = Vector2(0, -FLOOR_HEIGHT / 2)  # Adjust this if needed
+		
+		smoke.global_position = global_pos + smoke_offset
+		
+		print("Smoke effect created at global position: ", smoke.global_position)  # Debug print
+		
+		if smoke.has_method("start_effect") and initial_setup_complete:
+			smoke.start_effect()
+		else:
+			print("start_effect method not found on smoke effect!")
+	else:
+		print("Smoke effect scene is not set!")  # Debug print
 
 func update_castle_top_position():
 	if castle_top_instance:
 		var highest_floor = floors.keys().max()
 		var top_position = -(highest_floor * FLOOR_HEIGHT)
 		castle_top_instance.position.y = top_position
-		print("Castle top position updated to: ", castle_top_instance.position)
+		print("Floor container global position: ", floor_container.global_position)
+		print("Castle top global position: ", castle_top_instance.global_position)
 
 func change_floor(to_level: int) -> bool:
 	if to_level not in floors:
