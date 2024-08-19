@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=10 format=3 uid="uid://k64plrsd8f6w"]
 
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
 [ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="1_yjpfe"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d1rx1rn8p6pu0" path="res://assets/sprites/background/far_woods_x3.png" id="3_w25gq"]
 [ext_resource type="Texture2D" uid="uid://blqd8tblga3gc" path="res://assets/sprites/background/country-platform_x3.png" id="4_5e2t8"]
 [ext_resource type="PackedScene" uid="uid://cf4lv0gklc2t2" path="res://scenes/player.tscn" id="7_m0djk"]
+[ext_resource type="PackedScene" uid="uid://cfddndby1ecnx" path="res://scenes/Castle/castle.tscn" id="8_xu4uc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
 size = Vector2(2212, 66)
@@ -67,6 +68,7 @@ texture = ExtResource("4_5e2t8")
 centered = false
 
 [node name="Castle-tower-pixel-free-vector" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(155, -78)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_yjpfe")
@@ -79,3 +81,7 @@ position = Vector2(1112, 191)
 shape = SubResource("RectangleShape2D_k4byv")
 
 [node name="Player" parent="." instance=ExtResource("7_m0djk")]
+position = Vector2(608, 82)
+
+[node name="Castle" parent="." instance=ExtResource("8_xu4uc")]
+position = Vector2(841, 125)

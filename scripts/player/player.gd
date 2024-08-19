@@ -4,30 +4,51 @@ extends CharacterBody2D
 @export var jump_velocity = -400.0
 @export var acceleration = 1500.0
 @export var friction = 1000.0
-
 @onready var ap = $AnimationPlayer
 @onready var sprite = $Sprite2D
+@onready var camera = $Camera2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-# camera zoom options
+# Camera zoom options
 var zoom_speed = 0.05
 var min_zoom = 0.3
 var max_zoom = 1
 
-#func _ready():
-	#setup_animations()
+# Castle interaction
+var castle: Castle  # Reference to the Castle node
+var in_placement_area = false
+
+func _ready():
+	# Find and store reference to the Castle node
+	castle = get_parent().get_node("Castle")
+
 
 func _physics_process(delta):
 	var input_dir = Input.get_axis("left", "right")
-
 	apply_gravity(delta)
 	handle_jump()
 	handle_movement(delta, input_dir)
 	move_and_slide()
 	update_animations(input_dir)
-	zoom(delta)
+
+func _unhandled_input(event):
+	if event.is_action_pressed("zoom_in"):
+		zoom_camera(zoom_speed)
+	elif event.is_action_pressed("zoom_out"):
+		zoom_camera(-zoom_speed)
+	
+	# Castle interactions
+	if event.is_action_pressed("up"):
+		if castle and castle.change_floor(castle.current_floor + 1):
+			update_player_position()
+	elif event.is_action_pressed("down"):
+		if castle and castle.change_floor(castle.current_floor - 1):
+			update_player_position()
+	elif event.is_action_pressed("build_floor"):
+		if castle:
+			var new_floor = castle.build_new_floor()
 
 func apply_gravity(delta):
 	if not is_on_floor():
@@ -42,10 +63,10 @@ func handle_movement(delta, input_dir):
 		velocity.x = move_toward(velocity.x, input_dir * speed, acceleration * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
-		
+	
 	if input_dir != 0:
 		sprite.flip_h = (input_dir == -1)
-		
+
 func update_animations(input_dir):
 	if is_on_floor():
 		if input_dir == 0:
@@ -57,14 +78,28 @@ func update_animations(input_dir):
 			ap.play("jump")
 		elif velocity.y > 0: 
 			ap.play("fall")
-			
-func zoom(delta):
-	if Input.is_action_just_released("zoom_in"):
-		zoom_camera(zoom_speed)
-	elif Input.is_action_just_released("zoom_out"):
-		zoom_camera(-zoom_speed)
-		
+
 func zoom_camera(zoom_factor):
-	var new_zoom = $Camera2D.zoom.x + zoom_factor
+	var new_zoom = camera.zoom.x + zoom_factor
 	new_zoom = clamp(new_zoom, min_zoom, max_zoom)
-	$Camera2D.zoom = Vector2(new_zoom, new_zoom)
+	camera.zoom = Vector2(new_zoom, new_zoom)
+
+func update_player_position():
+	if castle and castle.floors.has(castle.current_floor):
+		var floor_instance = castle.floors[castle.current_floor].instance
+		if floor_instance:
+			var spawn_point = floor_instance.get_node("PlayerSpawnPoint")
+			if spawn_point:
+				global_position = spawn_point.global_position
+			else:
+				print("Warning: PlayerSpawnPoint not found on floor ", castle.current_floor)
+				global_position.y = floor_instance.global_position.y
+	else:
+		print("Cannot update player position: current floor does not exist")
+
+# Potential functions to use when entering buy area for castle floor upgrade
+func enter_placement_area():
+	in_placement_area = true
+
+func exit_placement_area():
+	in_placement_area = false

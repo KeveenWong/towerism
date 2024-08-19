@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfddndby1ecnx"]
+
+[ext_resource type="Script" path="res://scripts/castle.gd" id="1_tpwo1"]
+[ext_resource type="PackedScene" uid="uid://b63xrtocpypx5" path="res://scenes/Castle/floor.tscn" id="2_asi6c"]
+[ext_resource type="PackedScene" uid="uid://commwmbqlcsjd" path="res://scenes/Castle/castle-top.tscn" id="3_eshcu"]
+
+[node name="Castle" type="Node2D"]
+script = ExtResource("1_tpwo1")
+floor_scene = ExtResource("2_asi6c")
+castle_top_scene = ExtResource("3_eshcu")
+
+[node name="FloorContainer" type="Node2D" parent="."]
+
+[node name="Floor" parent="FloorContainer" instance=ExtResource("2_asi6c")]
+visible = false
+position = Vector2(0, 1)
+
+[node name="Castle-top" parent="." instance=ExtResource("3_eshcu")]
+visible = false
+position = Vector2(0, -96)
