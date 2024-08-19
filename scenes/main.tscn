@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=10 format=3 uid="uid://c4oi4vl2ejf81"]
 
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
 [ext_resource type="Texture2D" uid="uid://b4ugcadbh4gx" path="res://castle-tower-pixel-free-vector.png" id="1_yjpfe"]

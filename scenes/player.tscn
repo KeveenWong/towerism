@@ -211,9 +211,12 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["castle_top"]]
 position = Vector2(1, -2)
 zoom = Vector2(0.3, 0.3)
 process_callback = 0
+limit_left = -10000
+limit_top = -100000
+limit_right = 10000
 limit_bottom = 0
 position_smoothing_enabled = true
