@@ -8,9 +8,12 @@ point_count = 2
 
 [node name="Node2D" type="CPUParticles2D"]
 z_index = 2
-emitting = false
-amount = 250
+amount = 500
 explosiveness = 1.0
+randomness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(100, 0, -100, 0, 0, 0, -50, 0, 50, 0)
+emission_colors = PackedColorArray()
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 50.0
@@ -21,5 +24,5 @@ scale_amount_curve = SubResource("Curve_383kd")
 script = ExtResource("1_7bagp")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.01
+wait_time = 0.068
 one_shot = true
