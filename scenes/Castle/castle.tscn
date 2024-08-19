@@ -17,4 +17,5 @@ smoke_effect_scene = ExtResource("4_d1kr5")
 position = Vector2(0, 1)
 
 [node name="CastleTop" parent="." instance=ExtResource("3_eshcu")]
+visibility_layer = 1
 position = Vector2(0, -97)

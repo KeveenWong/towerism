@@ -18,8 +18,8 @@ var current_floor: int = 1
 @onready var floor_container = $FloorContainer
 @export var floor_scene: PackedScene
 @export var castle_top_scene: PackedScene
-@onready @export var smoke_effect_scene: PackedScene
-var castle_top_instance: Node = $CastleTop
+@export var smoke_effect_scene: PackedScene
+@onready var castle_top_instance: Node = $CastleTop
 var initial_setup_complete = false
 
 func _ready():
