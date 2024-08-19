@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ced7ae1ntc7t2" path="res://assets/sprites/castle_assets.png" id="1_8om7d"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y67u8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gjvrm"]
 texture = ExtResource("1_8om7d")
 0:0/0 = 0
 2:0/0 = 0
@@ -205,7 +205,7 @@ texture = ExtResource("1_8om7d")
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 navigation_layer_0/layers = 1
-sources/0 = SubResource("TileSetAtlasSource_y67u8")
+sources/0 = SubResource("TileSetAtlasSource_gjvrm")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_01oxi"]
 texture = ExtResource("1_8om7d")

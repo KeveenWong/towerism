@@ -21,18 +21,18 @@ position = Vector2(3, -151)
 position = Vector2(1, 27)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(662, -2343.5)
+position = Vector2(756, -2296)
 scale = Vector2(11.2969, 24.058)
 texture = ExtResource("1_l83v8")
 
 [node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(1, -359)
+position = Vector2(1, -163.57)
 motion_scale = Vector2(0.02, 1)
 motion_mirroring = Vector2(1152, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky"]
 texture_filter = 1
-position = Vector2(1, 66)
+position = Vector2(-5, -126.43)
 texture = ExtResource("2_0e6ux")
 centered = false
 
@@ -81,7 +81,7 @@ position = Vector2(1112, 191)
 shape = SubResource("RectangleShape2D_k4byv")
 
 [node name="Player" parent="." instance=ExtResource("7_m0djk")]
-position = Vector2(608, 82)
+position = Vector2(840, 87)
 
 [node name="Castle" parent="." instance=ExtResource("8_xu4uc")]
 position = Vector2(841, 125)

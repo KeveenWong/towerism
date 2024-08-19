@@ -12,7 +12,6 @@ castle_top_scene = ExtResource("3_eshcu")
 [node name="FloorContainer" type="Node2D" parent="."]
 
 [node name="Floor" parent="FloorContainer" instance=ExtResource("2_asi6c")]
-visible = false
 position = Vector2(0, 1)
 
 [node name="Castle-top" parent="." instance=ExtResource("3_eshcu")]
