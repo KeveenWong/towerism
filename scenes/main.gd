@@ -15,10 +15,12 @@ var score = 0
 
 const SCREEN_WIDTH = 1280
 const SCREEN_HEIGHT = 720
+const AUTO_TURRET_COST = 20
 
-var turret_types = {
+var weapon_types = {
 	"Cannon": preload("res://scenes/Turret/turret.tscn"),
-	# Add more turret types here in the future
+	"Crossbow": preload("res://scenes/Turret/crossbow.tscn"),
+	# Add more weapon types here in the future
 }
 
 var placed_turrets = {}
@@ -39,10 +41,12 @@ func _ready():
 	$ScoreTimer.start()
 
 	selection_menu.control_turret_requested.connect(_on_control_turret_requested)
+	selection_menu.make_auto_turret_requested.connect(_on_make_auto_turret_requested)
 
 	HUD.update_scales(scales)
 	HUD.update_money(money)
 	HUD.update_score(score)
+
 
 func _on_enemy_defeated(gold_value: int):
 	print("Enemy killed and gained: ", gold_value)
@@ -93,7 +97,7 @@ func place_turret(turret_type: String, side: String):
 	var turret_cost = 10  # Set the cost of the turret
 	
 	if money >= turret_cost:
-		var turret_scene_to_use = turret_types.get(turret_type, turret_scene)
+		var turret_scene_to_use = weapon_types.get(turret_type, turret_scene)
 		
 		if turret_scene_to_use:
 			var current_floor = castle.floors[castle.current_floor].instance
@@ -177,6 +181,11 @@ func show_selection_menu(side: String):
 		
 		selection_menu.global_position = menu_position
 		selection_menu.display_menu()
+		
+	# Update the menu options based on the turret's current state
+		if current_window_key in placed_turrets:
+			var turret = placed_turrets[current_window_key]
+			selection_menu.update_auto_button_text(turret.is_auto)
 
 func hide_selection_menu():
 	selection_menu.close_menu()
@@ -184,17 +193,15 @@ func hide_selection_menu():
 func _on_control_turret_requested():
 	if current_window_key in placed_turrets:
 		controlled_turret = placed_turrets[current_window_key]
+		controlled_turret.set_player_control(true)
 		$Player.set_controllable(false)
 
 func release_turret_control():
+	if controlled_turret:
+		controlled_turret.set_player_control(false)
 	controlled_turret = null
 	$Player.set_controllable(true)
 	
-func toggle_turret_control():
-	if controlled_turret:
-		release_turret_control()
-	else:
-		_on_control_turret_requested()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("interact"):
@@ -202,3 +209,27 @@ func _unhandled_input(event):
 			toggle_turret_control()
 		else:
 			$Player.handle_interaction()
+			
+
+func _on_make_auto_turret_requested():
+	if current_window_key in placed_turrets:
+		var turret = placed_turrets[current_window_key]
+		if not turret.is_auto:
+			if money >= AUTO_TURRET_COST:
+				money -= AUTO_TURRET_COST
+				turret.set_auto(true)
+				HUD.update_money(money)
+				print("Turret set to auto mode. Remaining money: ", money)
+			else:
+				print("Not enough money to set turret to auto mode. Cost: ", AUTO_TURRET_COST, ", Available: ", money)
+		else:
+			print("Turret is already in auto mode")
+		selection_menu.update_auto_button_text(turret.is_auto)
+	else:
+		print("No turret found at the current window")
+
+func toggle_turret_control():
+	if controlled_turret:
+		release_turret_control()
+	else:
+		_on_control_turret_requested()

@@ -23,7 +23,7 @@ _data = {
 "run": SubResource("Animation_aw54u")
 }
 
-[node name="Bat" type="CharacterBody2D"]
+[node name="Bat" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_n6ksx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
