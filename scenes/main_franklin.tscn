@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/main_franklin.gd" id="1_bp433"]
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_i27bk"]
-[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemy.tscn" id="2_gihbq"]
+[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemies/Slime.tscn" id="2_gihbq"]
 [ext_resource type="Texture2D" uid="uid://4xpc4h3kxtxy" path="res://assets/sprites/background/clouds-x3.png" id="2_hbjf4"]
 [ext_resource type="Texture2D" uid="uid://r5e1h18qsf5w" path="res://assets/sprites/background/mountain_x3.png" id="3_cgs4n"]
 [ext_resource type="Texture2D" uid="uid://d1rx1rn8p6pu0" path="res://assets/sprites/background/far_woods_x3.png" id="4_1xtdy"]
@@ -18,7 +18,7 @@ size = Vector2(3000, 66)
 [node name="Castle Game Franklin" type="Node2D"]
 position = Vector2(3, -151)
 script = ExtResource("1_bp433")
-enemy_scene = ExtResource("2_gihbq")
+slime_scene = ExtResource("2_gihbq")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

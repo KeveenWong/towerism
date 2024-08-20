@@ -3,7 +3,7 @@ extends Node2D
 var money = 0
 var score
 # var screen_size
-@export var enemy_scene: PackedScene
+@export var slime_scene: PackedScene
 
 const CASTLE_LOCATION_X = 1200
 const CASTLE_LOCATION_Y = 120
@@ -37,7 +37,7 @@ func _on_score_timer_timeout() -> void:
 
 
 func _on_enemy_timer_timeout() -> void:
-	var enemy = enemy_scene.instantiate()
+	var enemy = slime_scene.instantiate()
 	
 	enemy.castle_node = $Castle
 	
