@@ -2,8 +2,8 @@ extends Node2D
 class_name Weapon
 
 @export var Bullet: PackedScene
-@export var auto_fire_rate: float = 0.5
-@export var player_fire_rate: float = 0.2
+@export var auto_fire_rate: float = 2
+@export var player_fire_rate: float = 0.5
 @export var bullet_speed: float = 1000.0
 @export var barrel_length: float = 50.0
 @export var bullet_damage: float = 5.0
