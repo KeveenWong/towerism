@@ -9,23 +9,13 @@ script = ExtResource("1_i7tns")
 
 [node name="Panel" type="Panel" parent="."]
 offset_right = 62.0
-offset_bottom = 79.0
-
-[node name="Upgrade" type="Button" parent="Panel"]
-texture_filter = 1
-layout_mode = 0
-offset_right = 62.0
-offset_bottom = 27.0
-theme_override_fonts/font = ExtResource("1_3a8iy")
-theme_override_font_sizes/font_size = 16
-text = "Upgrade"
+offset_bottom = 55.0
 
 [node name="Control" type="Button" parent="Panel"]
 texture_filter = 1
 layout_mode = 0
-offset_top = 26.0
 offset_right = 62.0
-offset_bottom = 53.0
+offset_bottom = 27.0
 theme_override_fonts/font = ExtResource("1_3a8iy")
 theme_override_font_sizes/font_size = 16
 text = "Control"
@@ -33,9 +23,9 @@ text = "Control"
 [node name="MakeAuto" type="Button" parent="Panel"]
 texture_filter = 1
 layout_mode = 0
-offset_top = 52.0
+offset_top = 27.0
 offset_right = 62.0
-offset_bottom = 79.0
+offset_bottom = 54.0
 theme_override_fonts/font = ExtResource("1_3a8iy")
 theme_override_font_sizes/font_size = 16
 text = "Make Auto"
@@ -45,7 +35,7 @@ layout_mode = 0
 offset_left = -22.0
 offset_top = 3.0
 offset_bottom = 26.0
-text = "25"
+text = "20"
 metadata/_edit_group_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Panel/MakeAuto"]
@@ -57,6 +47,5 @@ offset_bottom = 27.0
 texture = ExtResource("3_a250a")
 metadata/_edit_group_ = true
 
-[connection signal="pressed" from="Panel/Upgrade" to="." method="_on_upgrade_pressed"]
 [connection signal="pressed" from="Panel/Control" to="." method="_on_control_pressed"]
 [connection signal="pressed" from="Panel/MakeAuto" to="." method="_on_make_auto_pressed"]

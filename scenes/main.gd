@@ -1,7 +1,7 @@
 extends Node2D
 
 var scales = 150
-var money = 20
+var money = 50
 var score = 0
 
 @export var slime_scene: PackedScene
@@ -23,9 +23,14 @@ const SCREEN_HEIGHT = 720
 const AUTO_TURRET_COST = 20
 
 var weapon_types = {
-	"Cannon": preload("res://scenes/Turret/turret.tscn"),
-	"Crossbow": preload("res://scenes/Turret/crossbow.tscn"),
-	# Add more weapon types here in the future
+	"Cannon": {
+		"scene": preload("res://scenes/Turret/turret.tscn"),
+		"cost": 20
+	},
+	"Crossbow": {
+		"scene": preload("res://scenes/Turret/crossbow.tscn"),
+		"cost": 15
+	},
 }
 
 var placed_turrets = {}
@@ -45,6 +50,7 @@ func _ready():
 	$EnemyTimer.start(base_spawn_rate)
 	$ScoreTimer.start()
 
+	$Castle.floor_build_requested.connect(_on_floor_build_requested)
 	selection_menu.control_turret_requested.connect(_on_control_turret_requested)
 	selection_menu.make_auto_turret_requested.connect(_on_make_auto_turret_requested)
 
@@ -106,11 +112,27 @@ func show_selection_wheel():
 func hide_selection_wheel():
 	selection_ui.hide_wheel()
 
+
+func _on_floor_build_requested(cost: int):
+	if money >= cost:
+		money -= cost
+		HUD.update_money(money)
+		$Castle.add_new_floor_after_payment()
+		print("New floor built. Remaining money: ", money)
+	else:
+		print("Not enough money to build a new floor. Cost: ", cost, ", Available: ", money)
+
+
 func place_turret(turret_type: String, side: String):
-	var turret_cost = 10  # Set the cost of the turret
+	if not weapon_types.has(turret_type):
+		print("Error: Turret type '" + turret_type + "' not found.")
+		return
+
+	var turret_data = weapon_types[turret_type]
+	var turret_cost = turret_data["cost"]
 	
 	if money >= turret_cost:
-		var turret_scene_to_use = weapon_types.get(turret_type, turret_scene)
+		var turret_scene_to_use = turret_data["scene"]
 		
 		if turret_scene_to_use:
 			var current_floor = castle.floors[castle.current_floor].instance
@@ -140,7 +162,6 @@ func place_turret(turret_type: String, side: String):
 			
 			turret.side = side
 
-			
 			add_child(turret)
 
 			# Add the turret to the placed_turrets dictionary
@@ -153,11 +174,11 @@ func place_turret(turret_type: String, side: String):
 			
 			money -= turret_cost
 			HUD.update_money(money)
-			print("Placing turret: " + turret_type + " at position: " + str(window_position))
+			print("Placing turret: " + turret_type + " at position: " + str(window_position) + ". Cost: " + str(turret_cost))
 		else:
-			print("Error: Turret type '" + turret_type + "' not found.")
+			print("Error: Turret scene not found for type '" + turret_type + "'.")
 	else:
-		print("Not enough money to place turret.")
+		print("Not enough money to place turret. Cost: " + str(turret_cost) + ", Available: " + str(money))
 
 # Function to remove a turret (if needed in the future)
 func remove_turret(floor_number: int, side: String):

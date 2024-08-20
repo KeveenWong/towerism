@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxyhlgoi8cmku"]
+
+[ext_resource type="Script" path="res://scenes/Turret/bullet.gd" id="1_rtx0m"]
+[ext_resource type="Texture2D" uid="uid://d0qbg2iagyhxi" path="res://assets/sprites/used in-game weapons/arrow.png" id="2_6raju"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8mijh"]
+radius = 5.0
+height = 22.0
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_rtx0m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8mijh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_6raju")
+flip_h = true
