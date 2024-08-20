@@ -61,4 +61,5 @@ func get_health():
 
 func _on_health_depleted():
 	emit_signal("enemy_defeated", GOLD_VALUE)
+	$Hit.play()
 	queue_free()

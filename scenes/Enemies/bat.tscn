@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://od7uf3tsidl"]
+[gd_scene load_steps=10 format=3 uid="uid://od7uf3tsidl"]
 
 [ext_resource type="Script" path="res://scenes/Enemies/bat.gd" id="1_qy0k6"]
 [ext_resource type="Texture2D" uid="uid://s67tletoe2yp" path="res://assets/sprites/enemies/Bat/Bat_Fly.png" id="2_8poo5"]
 [ext_resource type="Script" path="res://scenes/Enemies/health_component.gd" id="3_dqwcd"]
 [ext_resource type="Script" path="res://scenes/Enemies/velocity_component.gd" id="4_87k6g"]
+[ext_resource type="AudioStream" uid="uid://cja4vjgb1vnjv" path="res://assets/sounds/hitHurt.wav" id="5_1vye5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m3rx8"]
 radius = 11.0
@@ -46,3 +47,7 @@ script = ExtResource("3_dqwcd")
 
 [node name="VelocityComponent" type="Node" parent="."]
 script = ExtResource("4_87k6g")
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_1vye5")
+volume_db = -9.905

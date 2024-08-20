@@ -12,6 +12,8 @@ var score = 0
 @onready var castle = $Castle
 @onready var enemy_spawn_manager = $EnemySpawnManager
 @onready var HUD = $HUD
+@onready var start_game_ui = $StartGameUI
+@onready var animation_player = $StartGameUI/AnimationPlayer  # Reference to your AnimationPlayer node
 
 var base_spawn_rate = 5.0  # Start with a 3-second interval
 var min_spawn_rate = 0.5  # The minimum spawn interval to cap the frequency
@@ -39,6 +41,13 @@ var controlled_turret = null
 var current_window_key = ""
 
 func _ready():
+	## Show the start game UI and pause the game
+	start_game_ui.show()
+	# Start the flashing animation
+	animation_player.play("FlashLabel")
+	# Play Music
+	$Music.play()
+	
 	if $Castle:
 		enemy_spawn_manager.CASTLE_LOCATION_X = $Castle.global_position.x
 		enemy_spawn_manager.CASTLE_LOCATION_Y = $Castle.global_position.y
@@ -58,10 +67,18 @@ func _ready():
 	HUD.update_money(money)
 	HUD.update_score(score)
 
+func _unhandled_key_input(event):
+	if event.is_pressed() and start_game_ui.visible:
+		# Hide the start game UI and unpause the game
+		start_game_ui.hide()
+		$EnemyTimer.start()
+		$ScoreTimer.start()
+
 
 func _on_enemy_defeated(gold_value: int):
 	print("Enemy killed and gained: ", gold_value)
 	money += gold_value
+	$Hit.play()
 	HUD.update_money(money)
 
 
@@ -69,6 +86,7 @@ func _on_enemy_reached_center(plunder_value: int):
 	print("Enemy reached and plundered: ", plunder_value)
 	scales -= plunder_value
 	HUD.update_scales(scales)
+	$LoseScale.play()
 		
 func _process(delta):
 	# Update enemy timer wait time
@@ -162,6 +180,7 @@ func place_turret(turret_type: String, side: String):
 			
 			turret.side = side
 
+			$Build.play()
 			add_child(turret)
 
 			# Add the turret to the placed_turrets dictionary

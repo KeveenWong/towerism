@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf4lv0gklc2t2"]
+[gd_scene load_steps=12 format=3 uid="uid://cf4lv0gklc2t2"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_sn4uh"]
 [ext_resource type="Texture2D" uid="uid://cl51mb1ulfgty" path="res://assets/sprites/character_assets.png" id="2_yfssv"]
+[ext_resource type="AudioStream" uid="uid://b2ixbp3i1siq3" path="res://assets/sounds/jump.wav" id="3_5rdxv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24dju"]
 
@@ -220,3 +221,7 @@ limit_top = -100000
 limit_right = 10000
 limit_bottom = 0
 position_smoothing_enabled = true
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5rdxv")
+volume_db = -8.754

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://boe80ksxhtr44"]
+[gd_scene load_steps=5 format=3 uid="uid://boe80ksxhtr44"]
 
 [ext_resource type="Script" path="res://scenes/Turret/crossbow.gd" id="1_od0l1"]
 [ext_resource type="Texture2D" uid="uid://nyleu6ag4bmh" path="res://assets/sprites/used in-game weapons/crossbow.png" id="2_q7utb"]
-[ext_resource type="PackedScene" uid="uid://bxyhlgoi8cmku" path="res://scenes/Turret/arrows.tscn" id="2_xijig"]
+[ext_resource type="PackedScene" path="res://scenes/Turret/arrows.tscn" id="2_xijig"]
+[ext_resource type="AudioStream" uid="uid://cyvsa7xmfwvgj" path="res://assets/sounds/turretShoot.wav" id="4_jyypd"]
 
 [node name="Crossbow" type="Node2D"]
 script = ExtResource("1_od0l1")
@@ -16,3 +17,7 @@ flip_h = true
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(22, -6)
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jyypd")
+volume_db = -9.905

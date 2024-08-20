@@ -75,6 +75,7 @@ func shoot():
 		bullet.set_direction(Vector2.RIGHT.rotated(global_rotation))
 		bullet.speed = bullet_speed
 		get_tree().root.add_child(bullet)
+		$Shoot.play()
 
 func on_timeout_complete():
 	can_fire = true
