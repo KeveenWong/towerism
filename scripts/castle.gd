@@ -39,6 +39,8 @@ func _ready():
 		add_castle_top()
 	else:
 		update_castle_top_position()
+		
+	update_floor_visibility()
 	
 	initial_setup_complete = true
 
@@ -112,6 +114,7 @@ func change_floor(to_level: int) -> bool:
 		return false
 	
 	current_floor = to_level
+	update_floor_visibility()
 	return true
 
 func get_floor_center_position(level: int) -> Vector2:
@@ -121,9 +124,20 @@ func get_floor_center_position(level: int) -> Vector2:
 		return center
 	return Vector2.ZERO
 
+func update_floor_visibility():
+	for level in floors.keys():
+		var floor = floors[level]
+		if floor.instance:
+			var foreground = floor.instance.get_node_or_null("Foreground Castle")
+			if foreground:
+				foreground.modulate.a = 0.4 if level == current_floor else 1.0
+			else:
+				print("Foreground Castle node not found in floor ", level)
+
 func build_new_floor() -> bool:
 	var new_level = floors.keys().max() + 1
 	add_floor(new_level)
+	update_floor_visibility()
 	print("New floor built at level ", new_level)
 	return true
 	
@@ -137,6 +151,15 @@ func get_castle_top_floor_position() -> float:
 		# Return the y position of the highest floor instance
 		return floor_instance.position.y
 	else:
+		return 0.0
+		
+func get_castle_center_x() -> float:
+	# Assuming all floors have the same x position, we can use any floor
+	var any_floor = floors.values()[0]
+	if any_floor and any_floor.instance:
+		return any_floor.instance.global_position.x
+	else:
+		print("Error: No floors found in the castle!")
 		return 0.0
 
 # ... (other functions remain the same)

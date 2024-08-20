@@ -8,9 +8,9 @@ var current_state = State.MOVING_HORIZONTAL
 
 const HORIZONTAL_SPEED = 50  # pixels per second
 const VERTICAL_SPEED = 50  # pixels per second
-const CENTER_X = 1200 # Adjust based on your game's resolution
+const REACH_THRESHOLD = 10  # pixels
 
-@export var castle_node: Node2D
+@export var castle_node: Castle
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var health = 10  # Starting health for the enemy
@@ -24,6 +24,10 @@ func apply_gravity(delta):
 		velocity.y += gravity * delta
 
 func _physics_process(delta):
+	if not castle_node:
+		print("Error: Castle node not set!")
+		return
+
 	match current_state:
 		State.MOVING_HORIZONTAL:
 			apply_gravity(delta)
@@ -39,18 +43,22 @@ func _physics_process(delta):
 			move_and_slide()
 			
 			if position.y <= castle_node.get_castle_top_floor_position():
-				velocity.x = HORIZONTAL_SPEED * initial_x_direction
-				velocity.y = 0
 				current_state = State.MOVING_TO_CENTER
 				z_index = 1  # Make sure the enemy appears in front of the tower
 		
 		State.MOVING_TO_CENTER:
 			apply_gravity(delta)
+			var castle_center_x = castle_node.get_castle_center_x()
+			var direction_x = sign(castle_center_x - global_position.x)
+			velocity.x = direction_x * HORIZONTAL_SPEED
+			velocity.y = 0  # Remove vertical movement
 			move_and_slide()
-			if abs(position.x - CENTER_X) < 5:
+			
+			# Check if enemy is close enough to the center x
+			if abs(global_position.x - castle_center_x) < REACH_THRESHOLD:
+				print("Enemy reached center at x position: ", global_position.x)  # Debug print
 				emit_signal("reached_center")
 				queue_free()
-				# Enemy reached the center, implement game over or damage logic here
 
 func hit(damage):
 	health -= damage

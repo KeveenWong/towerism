@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://chic11t325jb7"]
+
+[ext_resource type="Script" path="res://scenes/UI/selection_wheel.gd" id="1_vr3xp"]
+[ext_resource type="Texture2D" uid="uid://nyleu6ag4bmh" path="res://assets/sprites/used in-game weapons/crossbow.png" id="2_t7c38"]
+[ext_resource type="Script" path="res://scripts/wheel_option.gd" id="3_lomdg"]
+[ext_resource type="Texture2D" uid="uid://blg82a1ip7p22" path="res://assets/Trap and Weapon/00 Gun.png" id="4_ndxi7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vn4k"]
+atlas = ExtResource("2_t7c38")
+region = Rect2(100, 100, 0, 0)
+script = ExtResource("3_lomdg")
+name = "None"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkwry"]
+atlas = ExtResource("4_ndxi7")
+region = Rect2(102, 26, 66, 38)
+script = ExtResource("3_lomdg")
+name = "Cannon"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47k5i"]
+atlas = ExtResource("2_t7c38")
+region = Rect2(0, 0, 132.744, 133.445)
+script = ExtResource("3_lomdg")
+name = ""
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y8qa"]
+atlas = ExtResource("2_t7c38")
+region = Rect2(0, 0, 133.095, 132.744)
+script = ExtResource("3_lomdg")
+name = ""
+
+[node name="SelectionWheel" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vr3xp")
+bkg_color = Color(0.197937, 0.197937, 0.197937, 1)
+line_color = Color(0.800491, 0.800491, 0.800491, 1)
+highlight_color = Color(0.385492, 0.385493, 0.385492, 1)
+outer_radius = 64
+inner_radius = 32
+options = Array[ExtResource("3_lomdg")]([SubResource("AtlasTexture_0vn4k"), SubResource("AtlasTexture_nkwry"), SubResource("AtlasTexture_47k5i"), SubResource("AtlasTexture_0y8qa")])
