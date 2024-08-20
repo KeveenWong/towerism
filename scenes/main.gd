@@ -22,6 +22,9 @@ var turret_types = {
 	# "Crossbow": preload("res://scenes/Turret/crossbow.tscn"),
 }
 
+# Dictionary to keep track of placed turrets
+var placed_turrets = {}
+
 func _ready():
 	score = 0
 	
@@ -69,27 +72,38 @@ func place_turret(turret_type: String, side: String):
 		var turret_scene_to_use = turret_types.get(turret_type, turret_scene)
 		
 		if turret_scene_to_use:
-			var current_floor = $Castle.floors[castle.current_floor].instance
+			var current_floor = castle.floors[castle.current_floor].instance
 			var window: Area2D
-			var window_position: Vector2
+			var window_key: String
 			
 			if side == "left":
 				window = current_floor.get_node("LeftWindow")
+				window_key = "floor_{0}_left".format([castle.current_floor])
 			elif side == "right":
 				window = current_floor.get_node("RightWindow")
+				window_key = "floor_{0}_right".format([castle.current_floor])
 			else:
 				print("Error: Invalid side specified for turret placement.")
 				return
 			
+			# Check if a turret already exists at this window
+			if placed_turrets.has(window_key):
+				print("Error: A turret already exists at this window.")
+				return
+			
 			# Get the global position of the Area2D (window) itself
-			window_position = window.global_position
-			window_position.y = window_position.y + 150
+			var window_position = window.global_position
+			window_position.y += 150
 			var turret = turret_scene_to_use.instantiate()
 			turret.global_position = window_position
 			
 			if side == "left":
 				turret.scale.y = -1
+			
 			add_child(turret)
+			
+			# Add the turret to the placed_turrets dictionary
+			placed_turrets[window_key] = turret
 			
 			money -= turret_cost
 			print("Placing turret: " + turret_type + " at position: " + str(window_position))
@@ -97,3 +111,14 @@ func place_turret(turret_type: String, side: String):
 			print("Error: Turret type '" + turret_type + "' not found.")
 	else:
 		print("Not enough money to place turret.")
+
+# Function to remove a turret (if needed in the future)
+func remove_turret(floor_number: int, side: String):
+	var window_key = "floor_{0}_{1}".format([floor_number, side])
+	if placed_turrets.has(window_key):
+		var turret = placed_turrets[window_key]
+		turret.queue_free()
+		placed_turrets.erase(window_key)
+		print("Turret removed from floor {0}, {1} side".format([floor_number, side]))
+	else:
+		print("No turret found at floor {0}, {1} side".format([floor_number, side]))
