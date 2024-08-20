@@ -2,6 +2,9 @@ extends Node
 class_name Castle
 
 const FLOOR_HEIGHT = 80  # Height of each floor in pixels
+const FLOOR_COST = 50  # Cost to build a new floor
+
+signal floor_build_requested(cost: int)
 
 class Floor:
 	var level: int
@@ -138,10 +141,18 @@ func update_floor_visibility():
 
 func build_new_floor() -> bool:
 	var new_level = floors.keys().max() + 1
+	
+	# Emit signal to request floor building
+	emit_signal("floor_build_requested", FLOOR_COST)
+	
+	# The actual building will be done in the main script after confirming payment
+	return true
+	
+func add_new_floor_after_payment():
+	var new_level = floors.keys().max() + 1
 	add_floor(new_level)
 	update_floor_visibility()
 	print("New floor built at level ", new_level)
-	return true
 	
 func get_castle_top_floor_position() -> float:
 	var highest_floor = floors.keys().max()
@@ -163,3 +174,8 @@ func get_castle_center_x() -> float:
 	else:
 		print("Error: No floors found in the castle!")
 		return 0.0
+		
+func get_castle_center_position() -> Vector2:
+	var center: Vector2
+	center = Vector2(get_castle_center_x(), get_castle_top_floor_position() - 150) # Hardcode distance y for bats
+	return center

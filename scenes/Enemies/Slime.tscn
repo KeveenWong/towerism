@@ -71,7 +71,7 @@ _data = {
 "run": SubResource("Animation_aw54u")
 }
 
-[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+[node name="Slime" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_rrutu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://od7uf3tsidl"]
 
-[ext_resource type="Script" path="res://scenes/Enemies/slime.gd" id="1_n6ksx"]
+[ext_resource type="Script" path="res://scenes/Enemies/bat.gd" id="1_qy0k6"]
 [ext_resource type="Texture2D" uid="uid://s67tletoe2yp" path="res://assets/sprites/enemies/Bat/Bat_Fly.png" id="2_8poo5"]
 [ext_resource type="Script" path="res://scenes/Enemies/health_component.gd" id="3_dqwcd"]
 [ext_resource type="Script" path="res://scenes/Enemies/velocity_component.gd" id="4_87k6g"]
@@ -25,7 +25,8 @@ _data = {
 }
 
 [node name="Bat" type="CharacterBody2D" groups=["enemies"]]
-script = ExtResource("1_n6ksx")
+motion_mode = 1
+script = ExtResource("1_qy0k6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_8poo5")
