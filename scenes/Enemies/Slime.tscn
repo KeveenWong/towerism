@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cvcah0nx5b03c"]
 
-[ext_resource type="Script" path="res://scenes/Enemies/slime.gd" id="1_rrutu"]
+[ext_resource type="Script" path="res://scenes/Enemies/Slime.gd" id="1_rrutu"]
 [ext_resource type="Texture2D" uid="uid://coqn2qhvfnook" path="res://assets/sprites/enemies/Slime/Slime_Spiked_Run.png" id="2_iv8yh"]
 [ext_resource type="Script" path="res://scenes/Enemies/health_component.gd" id="3_cwtwj"]
 [ext_resource type="Script" path="res://scenes/Enemies/velocity_component.gd" id="4_b467r"]
