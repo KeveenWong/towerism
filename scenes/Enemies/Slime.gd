@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-class_name Slime
-
 signal enemy_defeated(gold_value: int)
 signal enemy_reached_center(plunder_value: int)
 
