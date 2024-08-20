@@ -27,6 +27,7 @@ window/stretch/mode="canvas_items"
 
 castle_walls="The walls of the castle"
 player="things that the player is touching."
+enemies=""
 
 [input]
 

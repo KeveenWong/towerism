@@ -23,7 +23,7 @@ _data = {
 "run": SubResource("Animation_aw54u")
 }
 
-[node name="Bat" type="CharacterBody2D"]
+[node name="Bat" type="CharacterBody2D" groups=["enemies"]]
 motion_mode = 1
 script = ExtResource("1_qy0k6")
 

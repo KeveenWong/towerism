@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://q7wpn3mf3jcf"]
+[gd_scene load_steps=9 format=3 uid="uid://cvcah0nx5b03c"]
 
 [ext_resource type="Script" path="res://scenes/Enemies/slime.gd" id="1_rrutu"]
 [ext_resource type="Texture2D" uid="uid://coqn2qhvfnook" path="res://assets/sprites/enemies/Slime/Slime_Spiked_Run.png" id="2_iv8yh"]
@@ -71,7 +71,7 @@ _data = {
 "run": SubResource("Animation_aw54u")
 }
 
-[node name="Slime" type="CharacterBody2D"]
+[node name="Slime" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_rrutu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
