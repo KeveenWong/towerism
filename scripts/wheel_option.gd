@@ -1,4 +1,5 @@
-extends AtlasTexture
+extends Resource
 class_name WheelOption
 
-@export var name = ""
+@export var name: String = ""
+@export var display_text: String = ""

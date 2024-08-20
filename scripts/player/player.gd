@@ -13,12 +13,21 @@ var zoom_speed = 0.05
 var min_zoom = 0.3
 var max_zoom = 1
 var castle: Castle
-var in_placement_area = false
+var near_window = false
+var current_window_side = ""
+var current_floor = 0
+var main_scene
+
+# if player can be controlled or not
+var controllable = true
 
 func _ready():
 	castle = get_parent().get_node("Castle")
-
+	main_scene = get_tree().get_root().get_node("Castle Game")
+	
 func _physics_process(delta):
+	if not controllable:
+		return
 	var input_dir = Input.get_axis("left", "right")
 	apply_gravity(delta)
 	handle_jump()
@@ -26,6 +35,15 @@ func _physics_process(delta):
 	move_and_slide()
 	update_animations(input_dir)
 	update_selection_wheel_status()
+	
+func set_controllable(value: bool):
+	controllable = value
+	if not controllable:
+		velocity = Vector2.ZERO
+		
+func handle_interaction():
+	if near_window and main_scene.has_turret_at_window(current_floor, current_window_side):
+		main_scene.show_selection_menu(current_window_side)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
@@ -41,8 +59,11 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("build_floor"):
 		if castle:
 			var new_floor = castle.build_new_floor()
-	elif event.is_action_pressed("interact") and in_placement_area:
-		get_parent().show_selection_wheel()
+	elif event.is_action_pressed("interact") and near_window:
+		if main_scene.has_turret_at_window(castle.current_floor, current_window_side):
+			main_scene.show_selection_menu(current_window_side)
+		else:
+			main_scene.show_selection_wheel()
 
 func apply_gravity(delta):
 	if not is_on_floor():
@@ -91,17 +112,36 @@ func update_player_position():
 	else:
 		print("Cannot update player position: current floor does not exist")
 
-# Potential functions to use when entering buy area for castle floor upgrade
-func enter_placement_area():
-	in_placement_area = true
+func enter_placement_area(side: String):
+	near_window = true
+	current_window_side = side
+	current_floor = main_scene.castle.current_floor
 
 func exit_placement_area():
-	in_placement_area = false
+	near_window = false
+	current_window_side = ""
+	main_scene.hide_selection_menu()
 
-func update_selection_wheel_status():
-	if in_placement_area == false:
-		get_parent().hide_selection_wheel()
+
+func _on_left_window_entered(body):
+	if body == self:
+		current_window_side = "left"
+		enter_placement_area(current_window_side)
+
+func _on_right_window_entered(body):
+	if body == self:
+		current_window_side = "right"
+		enter_placement_area(current_window_side)
+
+func _on_window_exited(body):
+	if body == self:
+		exit_placement_area()
+		current_window_side = ""
 		
+func update_selection_wheel_status():
+	if near_window == false:
+		main_scene.hide_selection_wheel()
+		main_scene.hide_selection_menu()
 
 func _on_enemy_timer_timeout() -> void:
 	pass # Replace with function body.
