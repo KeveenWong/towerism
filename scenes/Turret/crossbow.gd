@@ -1,7 +1,7 @@
 extends Weapon
 class_name Crossbow
 
-@export var crossbow_damage: int = 1
+@export var crossbow_damage: int = 2
 @export var crossbow_auto_fire_rate: float = 0.5
 @export var crossbow_player_fire_rate: float = 0.05
 
