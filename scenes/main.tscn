@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=15 format=3 uid="uid://fhjpepkdi0ab"]
 
 [ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemies/slime.tscn" id="1_ir8sd"]
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
@@ -10,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://blqd8tblga3gc" path="res://assets/sprites/background/country-platform_x3.png" id="4_5e2t8"]
 [ext_resource type="PackedScene" uid="uid://cf4lv0gklc2t2" path="res://scenes/player.tscn" id="7_m0djk"]
 [ext_resource type="PackedScene" uid="uid://cfddndby1ecnx" path="res://scenes/Castle/castle.tscn" id="8_xu4uc"]
-[ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="9_mdr5t"]
+[ext_resource type="PackedScene" uid="uid://bt33bdsp31w32" path="res://scenes/Enemies/enemy_spawn_manager.tscn" id="12_7ndta"]
 [ext_resource type="PackedScene" uid="uid://btkj83hjtgka2" path="res://scenes/UI/ui.tscn" id="12_libg7"]
+[ext_resource type="PackedScene" uid="uid://bqcgxr3g1cb3" path="res://scenes/UI/hud.tscn" id="13_2th13"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
 size = Vector2(2212, 66)
@@ -19,8 +20,7 @@ size = Vector2(2212, 66)
 [node name="Castle Game" type="Node2D"]
 position = Vector2(3, -151)
 script = ExtResource("1_mjuie")
-enemy_scene = ExtResource("1_ir8sd")
-turret_scene = ExtResource("9_mdr5t")
+slime_scene = ExtResource("1_ir8sd")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -93,9 +93,16 @@ position = Vector2(840, 87)
 [node name="Castle" parent="." instance=ExtResource("8_xu4uc")]
 position = Vector2(841, 125)
 
+[node name="Ui" parent="." instance=ExtResource("12_libg7")]
+
+[node name="EnemySpawnManager" parent="." instance=ExtResource("12_7ndta")]
+
+[node name="HUD" parent="." instance=ExtResource("13_2th13")]
+
 [node name="EnemyTimer" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="Ui" parent="." instance=ExtResource("12_libg7")]
+[node name="ScoreTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
