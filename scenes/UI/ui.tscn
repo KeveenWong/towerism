@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://btkj83hjtgka2"]
 
-[ext_resource type="Script" path="res://scenes/UI/selection_ui.gd" id="1_gope0"]
-[ext_resource type="PackedScene" uid="uid://chic11t325jb7" path="res://scenes/UI/selection_wheel.tscn" id="1_wm5sk"]
+[ext_resource type="Script" path="res://scenes/UI/turret_wheel/selection_ui.gd" id="1_gope0"]
+[ext_resource type="PackedScene" uid="uid://chic11t325jb7" path="res://scenes/UI/turret_wheel/selection_wheel.tscn" id="1_wm5sk"]
 [ext_resource type="Script" path="res://scripts/wheel_option.gd" id="3_tprgb"]
 [ext_resource type="Texture2D" uid="uid://nyleu6ag4bmh" path="res://assets/sprites/used in-game weapons/crossbow.png" id="4_30ont"]
 [ext_resource type="Texture2D" uid="uid://blg82a1ip7p22" path="res://assets/Trap and Weapon/00 Gun.png" id="5_0pvlm"]
@@ -11,18 +11,21 @@ atlas = ExtResource("4_30ont")
 region = Rect2(100, 100, 0, 0)
 script = ExtResource("3_tprgb")
 name = "None"
+display_text = ""
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nkwry"]
 atlas = ExtResource("5_0pvlm")
 region = Rect2(102, 26, 66, 38)
 script = ExtResource("3_tprgb")
 name = "Cannon"
+display_text = ""
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xb24"]
 atlas = ExtResource("4_30ont")
 region = Rect2(0, 0, 133.445, 132.744)
 script = ExtResource("3_tprgb")
 name = "Crossbow"
+display_text = ""
 
 [node name="Ui" type="Node"]
 
