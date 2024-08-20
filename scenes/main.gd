@@ -72,7 +72,9 @@ func _process(delta):
 		
 		if Input.is_action_pressed("fire"):
 			controlled_turret.shoot()
-
+			
+func _on_enemy_killed():
+	pass
 
 func _on_score_timer_timeout() -> void:
 	score += 1
