@@ -1,64 +1,59 @@
 extends Node2D
 
-var money = 0
-var score
-@export var enemy_scene: PackedScene
-@export var turret_scene: PackedScene  # Reference to the current turret scene
+var scales = 150
+var money = 20
+var score = 0
+
+@export var slime_scene: PackedScene
+@export var turret_scene: PackedScene
+
 @onready var selection_ui = $Ui/CanvasLayer
 @onready var castle = $Castle
+@onready var enemy_spawn_manager = $EnemySpawnManager
+@onready var HUD = $HUD
 
-var CASTLE_LOCATION_X: float
-var CASTLE_LOCATION_Y: float
 const SCREEN_WIDTH = 1280
 const SCREEN_HEIGHT = 720
-var SPAWN_LEFT: float
-var SPAWN_RIGHT: float
-const SPAWN_Y = 0
 
-# Dictionary to store different turret types (for future use)
 var turret_types = {
 	"Cannon": preload("res://scenes/Turret/turret.tscn"),
 	# Add more turret types here in the future
-	# "Crossbow": preload("res://scenes/Turret/crossbow.tscn"),
 }
 
-# Dictionary to keep track of placed turrets
 var placed_turrets = {}
 
 func _ready():
-	score = 0
-	
 	if $Castle:
-		CASTLE_LOCATION_X = $Castle.global_position.x
-		CASTLE_LOCATION_Y = $Castle.global_position.y
-		
-		SPAWN_LEFT = CASTLE_LOCATION_X - (SCREEN_WIDTH / 3)
-		SPAWN_RIGHT = CASTLE_LOCATION_X + (SCREEN_WIDTH / 3)
+		enemy_spawn_manager.CASTLE_LOCATION_X = $Castle.global_position.x
+		enemy_spawn_manager.CASTLE_LOCATION_Y = $Castle.global_position.y
+		enemy_spawn_manager.SPAWN_LEFT = enemy_spawn_manager.CASTLE_LOCATION_X - (SCREEN_WIDTH / 3)
+		enemy_spawn_manager.SPAWN_RIGHT = enemy_spawn_manager.CASTLE_LOCATION_X + (SCREEN_WIDTH / 3)
 	else:
 		print("Error: Castle node not found!")
 	
 	$EnemyTimer.start()
+	$ScoreTimer.start()
+	HUD.update_scales(scales)
+	HUD.update_money(money)
+	HUD.update_score(score)
 
-func _on_enemy_killed():
-	pass
+func _on_enemy_defeated(gold_value: int):
+	print("Enemy killed and gained: ", gold_value)
+	money += gold_value
+	HUD.update_money(money)
+
+
+func _on_enemy_reached_center(plunder_value: int):
+	print("Enemy reached and plundered: ", plunder_value)
+	scales -= plunder_value
+	HUD.update_scales(scales)
 
 func _on_score_timer_timeout() -> void:
 	score += 1
+	HUD.update_score(score)
 
 func _on_enemy_timer_timeout() -> void:
-	pass
-	#var enemy = enemy_scene.instantiate()
-	#
-	#enemy.castle_node = $Castle
-	#
-	#var spawn_left = randf() < 0.5
-	#var spawn_x = SPAWN_LEFT if spawn_left else SPAWN_RIGHT
-	#
-	#enemy.position = Vector2(spawn_x, SPAWN_Y)
-	#enemy.initial_x_direction = 1 if spawn_left else -1
-	#
-	#enemy.connect("enemy_killed", _on_enemy_killed)
-	#add_child(enemy)
+	enemy_spawn_manager.spawn_random_enemy()
 
 func show_selection_wheel():
 	selection_ui.show_wheel()
@@ -67,7 +62,7 @@ func hide_selection_wheel():
 	selection_ui.hide_wheel()
 
 func place_turret(turret_type: String, side: String):
-	var turret_cost = 0  # Set the cost of the turret
+	var turret_cost = 10  # Set the cost of the turret
 	
 	if money >= turret_cost:
 		var turret_scene_to_use = turret_types.get(turret_type, turret_scene)
@@ -107,6 +102,7 @@ func place_turret(turret_type: String, side: String):
 			placed_turrets[window_key] = turret
 			
 			money -= turret_cost
+			HUD.update_money(money)
 			print("Placing turret: " + turret_type + " at position: " + str(window_position))
 		else:
 			print("Error: Turret type '" + turret_type + "' not found.")
