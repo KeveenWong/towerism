@@ -1,15 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqcgxr3g1cb3"]
+[gd_scene load_steps=6 format=3 uid="uid://bqcgxr3g1cb3"]
 
 [ext_resource type="Script" path="res://scenes/UI/hud.gd" id="1_5f6x3"]
 [ext_resource type="Texture2D" uid="uid://bojvnionogv12" path="res://assets/sprites/coin.png" id="2_2t2tb"]
 [ext_resource type="Texture2D" uid="uid://d3o1buglkn5ro" path="res://assets/sprites/scale.png" id="2_67ljv"]
 [ext_resource type="Texture2D" uid="uid://d2bt8f3d6ewl5" path="res://assets/sprites/pause.png" id="3_t23t8"]
+[ext_resource type="PackedScene" uid="uid://lwejfvrvb402" path="res://scenes/UI/selection_menu/SelectionMenu.tscn" id="5_q430x"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_5f6x3")
 
 [node name="ScalesLabel" type="Label" parent="."]
-anchors_preset = -1
 offset_left = 18.0
 offset_top = 3.0
 offset_right = 45.0
@@ -74,7 +74,6 @@ expand_mode = 1
 metadata/_edit_group_ = true
 
 [node name="MoneyLabel" type="Label" parent="."]
-anchors_preset = -1
 offset_left = 54.0
 offset_top = 3.0
 offset_right = 86.0
@@ -82,5 +81,8 @@ offset_bottom = 26.0
 scale = Vector2(0.6, 0.6)
 text = "0"
 metadata/_edit_group_ = true
+
+[node name="SelectionMenu" parent="." instance=ExtResource("5_q430x")]
+position = Vector2(44, 66)
 
 [connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]

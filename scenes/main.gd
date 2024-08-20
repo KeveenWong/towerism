@@ -13,6 +13,11 @@ var score = 0
 @onready var enemy_spawn_manager = $EnemySpawnManager
 @onready var HUD = $HUD
 
+var base_spawn_rate = 5.0  # Start with a 3-second interval
+var min_spawn_rate = 0.5  # The minimum spawn interval to cap the frequency
+var time_factor = 0.01  # Adjust this value to control how quickly the spawn rate increases
+@export var elapsed_time = 0  # Track how long the game has been running
+
 const SCREEN_WIDTH = 1280
 const SCREEN_HEIGHT = 720
 
@@ -35,7 +40,7 @@ func _ready():
 	else:
 		print("Error: Castle node not found!")
 	
-	$EnemyTimer.start()
+	$EnemyTimer.start(base_spawn_rate)
 	$ScoreTimer.start()
 
 	selection_menu.control_turret_requested.connect(_on_control_turret_requested)
@@ -56,6 +61,14 @@ func _on_enemy_reached_center(plunder_value: int):
 	HUD.update_scales(scales)
 		
 func _process(delta):
+	# Update enemy timer wait time
+	elapsed_time += delta
+	
+	# Gradually reduce the spawn time as the game progresses
+	var new_spawn_rate = max(base_spawn_rate - elapsed_time * time_factor, min_spawn_rate)
+	$EnemyTimer.wait_time = new_spawn_rate
+	
+	# Check turret
 	if controlled_turret:
 		var mouse_pos = get_global_mouse_position()
 		var angle_to_mouse = controlled_turret.global_position.angle_to_point(mouse_pos)

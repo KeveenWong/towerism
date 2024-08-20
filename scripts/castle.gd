@@ -162,3 +162,8 @@ func get_castle_center_x() -> float:
 	else:
 		print("Error: No floors found in the castle!")
 		return 0.0
+		
+func get_castle_center_position() -> Vector2:
+	var center: Vector2
+	center = Vector2(get_castle_center_x(), get_castle_top_floor_position() - 150) # Hardcode distance y for bats
+	return center
