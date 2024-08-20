@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://b63xrtocpypx5"]
+[gd_scene load_steps=8 format=4 uid="uid://b63xrtocpypx5"]
 
+[ext_resource type="Script" path="res://scenes/Castle/floor.gd" id="1_5u4wr"]
 [ext_resource type="Texture2D" uid="uid://ced7ae1ntc7t2" path="res://assets/sprites/castle_assets.png" id="1_8om7d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gjvrm"]
@@ -428,12 +429,16 @@ texture = ExtResource("1_8om7d")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_01oxi")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqt2d"]
+size = Vector2(22, 47)
+
 [node name="Floor" type="Node2D"]
+script = ExtResource("1_5u4wr")
 
 [node name="Background Castle" type="TileMapLayer" parent="."]
 texture_filter = 1
 position = Vector2(0, -1)
-tile_map_data = PackedByteArray("AAD7//3/AAADAAYAAAD///z/AAADAAYAAAD///3/AAADAAYAAAD///7/AAADAAYAAAAAAPz/AAADAAYAAAAAAP3/AAADAAYAAAAAAP7/AAADAAYAAAAEAP3/AAADAAYAAAD7//z/AAADAAYAAAD///v/AAADAAYAAAAAAPv/AAADAAYAAAAEAPz/AAADAAYAAAA=")
+tile_map_data = PackedByteArray("AAD7//3/AAADAAYAAAD///z/AAADAAYAAAD///3/AAADAAYAAAD///7/AAAAAAYAAAAAAPz/AAADAAYAAAAAAP3/AAADAAYAAAAAAP7/AAAAAAYAAAAEAP3/AAADAAYAAAD7//z/AAADAAYAAAD///v/AAADAAYAAAAAAPv/AAADAAYAAAAEAPz/AAADAAYAAAD7//v/AAAAAAYAAAD8//v/AAAAAAYAAAD9//v/AAAAAAYAAAD+//v/AAAAAAYAAAD+//z/AAAAAAYAAAD9//z/AAAAAAYAAAD8//z/AAAAAAYAAAD8//3/AAAAAAYAAAD9//3/AAAAAAYAAAD+//3/AAAAAAYAAAD+//7/AAAAAAYAAAD9//7/AAAAAAYAAAD8//7/AAAAAAYAAAD7//7/AAAAAAYAAAABAP7/AAAAAAYAAAACAP7/AAAAAAYAAAADAP7/AAAAAAYAAAAEAP7/AAAAAAYAAAABAP3/AAAAAAYAAAACAP3/AAAAAAYAAAADAP3/AAAAAAYAAAACAPz/AAAAAAYAAAABAPz/AAAAAAYAAAABAPv/AAAAAAYAAAACAPv/AAAAAAYAAAADAPv/AAAAAAYAAAAEAPv/AAAAAAYAAAADAPz/AAAAAAYAAAA=")
 tile_set = SubResource("TileSet_ux6ku")
 collision_enabled = false
 
@@ -460,3 +465,17 @@ tile_set = SubResource("TileSet_s3kbn")
 
 [node name="PlayerSpawnPoint" type="Node2D" parent="."]
 position = Vector2(0, -35)
+
+[node name="LeftWindow" type="Area2D" parent="."]
+position = Vector2(-70.645, -40.755)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWindow"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_mqt2d")
+
+[node name="RightWindow" type="Area2D" parent="."]
+position = Vector2(73, -42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWindow"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_mqt2d")

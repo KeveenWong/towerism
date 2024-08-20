@@ -8,22 +8,15 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var camera = $Camera2D
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-# Camera zoom options
 var zoom_speed = 0.05
 var min_zoom = 0.3
 var max_zoom = 1
-
-# Castle interaction
-var castle: Castle  # Reference to the Castle node
+var castle: Castle
 var in_placement_area = false
 
 func _ready():
-	# Find and store reference to the Castle node
 	castle = get_parent().get_node("Castle")
-
 
 func _physics_process(delta):
 	var input_dir = Input.get_axis("left", "right")
@@ -32,15 +25,14 @@ func _physics_process(delta):
 	handle_movement(delta, input_dir)
 	move_and_slide()
 	update_animations(input_dir)
+	update_selection_wheel_status()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
 		zoom_camera(zoom_speed)
 	elif event.is_action_pressed("zoom_out"):
 		zoom_camera(-zoom_speed)
-	
-	# Castle interactions
-	if event.is_action_pressed("up"):
+	elif event.is_action_pressed("up"):
 		if castle and castle.change_floor(castle.current_floor + 1):
 			update_player_position()
 	elif event.is_action_pressed("down"):
@@ -49,6 +41,8 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("build_floor"):
 		if castle:
 			var new_floor = castle.build_new_floor()
+	elif event.is_action_pressed("interact") and in_placement_area:
+		get_parent().show_selection_wheel()
 
 func apply_gravity(delta):
 	if not is_on_floor():
@@ -103,3 +97,11 @@ func enter_placement_area():
 
 func exit_placement_area():
 	in_placement_area = false
+
+func update_selection_wheel_status():
+	if in_placement_area == false:
+		get_parent().hide_selection_wheel()
+		
+
+func _on_enemy_timer_timeout() -> void:
+	pass # Replace with function body.

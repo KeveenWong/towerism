@@ -21,7 +21,8 @@ func _ready():
 		print("Warning: 'fire' action is not defined in the InputMap")
 
 func _process(delta):
-	look_at(get_global_mouse_position())
+	var mouse_position = get_global_mouse_position()
+	look_at(mouse_position)
 	
 	if Input.is_action_pressed("fire") and can_fire:
 		shoot()
