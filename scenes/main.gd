@@ -46,18 +46,19 @@ func _on_score_timer_timeout() -> void:
 	score += 1
 
 func _on_enemy_timer_timeout() -> void:
-	var enemy = enemy_scene.instantiate()
-	
-	enemy.castle_node = $Castle
-	
-	var spawn_left = randf() < 0.5
-	var spawn_x = SPAWN_LEFT if spawn_left else SPAWN_RIGHT
-	
-	enemy.position = Vector2(spawn_x, SPAWN_Y)
-	enemy.initial_x_direction = 1 if spawn_left else -1
-	
-	enemy.connect("enemy_killed", _on_enemy_killed)
-	add_child(enemy)
+	pass
+	#var enemy = enemy_scene.instantiate()
+	#
+	#enemy.castle_node = $Castle
+	#
+	#var spawn_left = randf() < 0.5
+	#var spawn_x = SPAWN_LEFT if spawn_left else SPAWN_RIGHT
+	#
+	#enemy.position = Vector2(spawn_x, SPAWN_Y)
+	#enemy.initial_x_direction = 1 if spawn_left else -1
+	#
+	#enemy.connect("enemy_killed", _on_enemy_killed)
+	#add_child(enemy)
 
 func show_selection_wheel():
 	selection_ui.show_wheel()

@@ -1,53 +1,105 @@
 extends Node2D
 
 var money = 0
-var score
-# var screen_size
-@export var enemy_scene: PackedScene
+var score = 0
 
-const CASTLE_LOCATION_X = 1200
-const CASTLE_LOCATION_Y = 120
-const SCREEN_WIDTH = 1280  # Adjust based on your game's resolution
+@export var slime_scene: PackedScene
+@export var turret_scene: PackedScene
+
+@onready var selection_ui = $Ui/CanvasLayer
+@onready var castle = $Castle
+@onready var enemy_spawn_manager = $EnemySpawnManager
+
+const SCREEN_WIDTH = 1280
 const SCREEN_HEIGHT = 720
-const SPAWN_LEFT = CASTLE_LOCATION_X - (SCREEN_WIDTH / 3)
-const SPAWN_RIGHT = CASTLE_LOCATION_X + (SCREEN_WIDTH / 3)
-const SPAWN_Y = 0  # Adjust based on where you want enemies to spawn vertically
 
-# Move some of this to a new_game() function later
+var turret_types = {
+	"Cannon": preload("res://scenes/Turret/turret.tscn"),
+	# Add more turret types here in the future
+}
+
+var placed_turrets = {}
+
 func _ready():
-	# screen_size = get_viewport_rect().size
-	score = 0
-	#$ScoreTimer.start()
+	if $Castle:
+		enemy_spawn_manager.CASTLE_LOCATION_X = $Castle.global_position.x
+		enemy_spawn_manager.CASTLE_LOCATION_Y = $Castle.global_position.y
+		enemy_spawn_manager.SPAWN_LEFT = enemy_spawn_manager.CASTLE_LOCATION_X - (SCREEN_WIDTH / 3)
+		enemy_spawn_manager.SPAWN_RIGHT = enemy_spawn_manager.CASTLE_LOCATION_X + (SCREEN_WIDTH / 3)
+	else:
+		print("Error: Castle node not found!")
+	
 	$EnemyTimer.start()
-	pass
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
-func _on_enemy_killed():
-	pass
-	#money += 10
-	#money_label.text = "Money: $" + str(money)
-	#print("Enemy killed! Money: $", money)  # Debugging Line
-	
+func _on_slime_killed():
+	score += 1
+
 func _on_score_timer_timeout() -> void:
 	score += 1
-	# $HUD.update_score(score)
-
 
 func _on_enemy_timer_timeout() -> void:
-	var enemy = enemy_scene.instantiate()
+	enemy_spawn_manager.spawn_random_enemy()
+
+func show_selection_wheel():
+	selection_ui.show_wheel()
 	
-	enemy.castle_node = $Castle
+func hide_selection_wheel():
+	selection_ui.hide_wheel()
+
+func place_turret(turret_type: String, side: String):
+	var turret_cost = 0  # Set the cost of the turret
 	
-	# Randomly choose left or right side
-	var spawn_left = randf() < 0.5
-	var spawn_x = SPAWN_LEFT if spawn_left else SPAWN_RIGHT
-	
-	enemy.position = Vector2(spawn_x, SPAWN_Y)
-	enemy.initial_x_direction = 1 if spawn_left else -1
-	
-	# Connect the enemy_killed signal
-	enemy.connect("enemy_killed", _on_enemy_killed)
-	add_child(enemy)
+	if money >= turret_cost:
+		var turret_scene_to_use = turret_types.get(turret_type, turret_scene)
+		
+		if turret_scene_to_use:
+			var current_floor = castle.floors[castle.current_floor].instance
+			var window: Area2D
+			var window_key: String
+			
+			if side == "left":
+				window = current_floor.get_node("LeftWindow")
+				window_key = "floor_{0}_left".format([castle.current_floor])
+			elif side == "right":
+				window = current_floor.get_node("RightWindow")
+				window_key = "floor_{0}_right".format([castle.current_floor])
+			else:
+				print("Error: Invalid side specified for turret placement.")
+				return
+			
+			# Check if a turret already exists at this window
+			if placed_turrets.has(window_key):
+				print("Error: A turret already exists at this window.")
+				return
+			
+			# Get the global position of the Area2D (window) itself
+			var window_position = window.global_position
+			window_position.y += 150
+			var turret = turret_scene_to_use.instantiate()
+			turret.global_position = window_position
+			
+			if side == "left":
+				turret.scale.y = -1
+			
+			add_child(turret)
+			
+			# Add the turret to the placed_turrets dictionary
+			placed_turrets[window_key] = turret
+			
+			money -= turret_cost
+			print("Placing turret: " + turret_type + " at position: " + str(window_position))
+		else:
+			print("Error: Turret type '" + turret_type + "' not found.")
+	else:
+		print("Not enough money to place turret.")
+
+# Function to remove a turret (if needed in the future)
+func remove_turret(floor_number: int, side: String):
+	var window_key = "floor_{0}_{1}".format([floor_number, side])
+	if placed_turrets.has(window_key):
+		var turret = placed_turrets[window_key]
+		turret.queue_free()
+		placed_turrets.erase(window_key)
+		print("Turret removed from floor {0}, {1} side".format([floor_number, side]))
+	else:
+		print("No turret found at floor {0}, {1} side".format([floor_number, side]))
