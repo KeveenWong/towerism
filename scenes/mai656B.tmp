@@ -100,6 +100,6 @@ wait_time = 2.0
 [node name="Ui" parent="." instance=ExtResource("12_libg7")]
 
 [node name="SelectionMenu" parent="." instance=ExtResource("13_o6s3d")]
-position = Vector2(676, 38)
+position = Vector2(680, 29)
 
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]

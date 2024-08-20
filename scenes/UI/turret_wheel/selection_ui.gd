@@ -24,4 +24,5 @@ func hide_wheel():
 	selection_wheel.hide()
 	
 func set_placement_side(side: String):
+	print("placement side is", side)
 	placement_side = side
