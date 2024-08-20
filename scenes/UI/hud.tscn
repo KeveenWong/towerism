@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqcgxr3g1cb3"]
+
+[ext_resource type="Script" path="res://scenes/UI/hud.gd" id="1_5f6x3"]
+[ext_resource type="Texture2D" uid="uid://bojvnionogv12" path="res://assets/sprites/coin.png" id="2_2t2tb"]
+[ext_resource type="Texture2D" uid="uid://d3o1buglkn5ro" path="res://assets/sprites/scale.png" id="2_67ljv"]
+[ext_resource type="Texture2D" uid="uid://d2bt8f3d6ewl5" path="res://assets/sprites/pause.png" id="3_t23t8"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_5f6x3")
+
+[node name="ScalesLabel" type="Label" parent="."]
+anchors_preset = -1
+offset_left = 18.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 26.0
+scale = Vector2(0.6, 0.6)
+text = "0"
+metadata/_edit_group_ = true
+
+[node name="ScalesIcon" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 17.0
+offset_bottom = 16.0
+texture = ExtResource("2_67ljv")
+expand_mode = 1
+metadata/_edit_group_ = true
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 137.0
+offset_right = 177.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+
+[node name="PauseButton" type="Button" parent="."]
+process_mode = 3
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -21.0
+offset_bottom = 25.0
+grow_horizontal = 0
+focus_mode = 0
+icon = ExtResource("3_t23t8")
+flat = true
+expand_icon = true
+
+[node name="PauseLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -11.5
+offset_right = 31.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="MoneyIcon" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = 38.0
+offset_top = 2.0
+offset_right = 54.0
+offset_bottom = 18.0
+texture = ExtResource("2_2t2tb")
+expand_mode = 1
+metadata/_edit_group_ = true
+
+[node name="MoneyLabel" type="Label" parent="."]
+anchors_preset = -1
+offset_left = 54.0
+offset_top = 3.0
+offset_right = 86.0
+offset_bottom = 26.0
+scale = Vector2(0.6, 0.6)
+text = "0"
+metadata/_edit_group_ = true
+
+[connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]
