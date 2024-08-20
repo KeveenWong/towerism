@@ -6,6 +6,8 @@ var score
 @export var turret_scene: PackedScene  # Reference to the current turret scene
 @onready var selection_ui = $Ui/CanvasLayer
 @onready var castle = $Castle
+@onready var start_game_ui = $StartGameUI
+@onready var animation_player = $StartGameUI/AnimationPlayer  # Reference to your AnimationPlayer node
 
 var CASTLE_LOCATION_X: float
 var CASTLE_LOCATION_Y: float
@@ -14,6 +16,8 @@ const SCREEN_HEIGHT = 720
 var SPAWN_LEFT: float
 var SPAWN_RIGHT: float
 const SPAWN_Y = 0
+
+
 
 # Dictionary to store different turret types (for future use)
 var turret_types = {
@@ -26,6 +30,11 @@ var turret_types = {
 var placed_turrets = {}
 
 func _ready():
+	## Show the start game UI and pause the game
+	start_game_ui.show()
+	# Start the flashing animation
+	animation_player.play("FlashLabel")
+	
 	score = 0
 	
 	if $Castle:
@@ -37,7 +46,11 @@ func _ready():
 	else:
 		print("Error: Castle node not found!")
 	
-	$EnemyTimer.start()
+func _unhandled_key_input(event):
+	if event.is_pressed() and start_game_ui.visible:
+		# Hide the start game UI and unpause the game
+		start_game_ui.hide()
+		$EnemyTimer.start()
 
 func _on_enemy_killed():
 	pass

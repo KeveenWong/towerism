@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://k64plrsd8f6w"]
+[gd_scene load_steps=18 format=3 uid="uid://k64plrsd8f6w"]
 
 [ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemy.tscn" id="1_ir8sd"]
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_l83v8"]
@@ -12,9 +12,48 @@
 [ext_resource type="PackedScene" uid="uid://cfddndby1ecnx" path="res://scenes/Castle/castle.tscn" id="8_xu4uc"]
 [ext_resource type="PackedScene" uid="uid://dirc752pdlvja" path="res://scenes/Turret/turret.tscn" id="9_mdr5t"]
 [ext_resource type="PackedScene" uid="uid://btkj83hjtgka2" path="res://scenes/UI/ui.tscn" id="12_libg7"]
+[ext_resource type="FontVariation" uid="uid://dvsvtpevbpcpv" path="res://monogram.tres" id="13_aqnvp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
 size = Vector2(2212, 66)
+
+[sub_resource type="Animation" id="Animation_lsf55"]
+resource_name = "FlashLabel"
+length = 2.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StartPrompt:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.733333, 1.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bcne0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StartPrompt:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vkhhl"]
+_data = {
+"FlashLabel": SubResource("Animation_lsf55"),
+"RESET": SubResource("Animation_bcne0")
+}
 
 [node name="Castle Game" type="Node2D"]
 position = Vector2(3, -151)
@@ -97,5 +136,43 @@ position = Vector2(841, 125)
 wait_time = 2.0
 
 [node name="Ui" parent="." instance=ExtResource("12_libg7")]
+
+[node name="StartGameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 683.0
+offset_top = -235.3
+offset_right = 1003.0
+offset_bottom = -113.3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StartGameUI"]
+root_node = NodePath("../Title")
+libraries = {
+"": SubResource("AnimationLibrary_vkhhl")
+}
+
+[node name="StartPrompt" type="Label" parent="StartGameUI"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_fonts/font = ExtResource("13_aqnvp")
+theme_override_font_sizes/font_size = 26
+text = "press any button to start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="StartGameUI"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -140.0
+offset_top = -89.7
+offset_right = 457.0
+offset_bottom = 167.3
+theme_override_fonts/font = ExtResource("13_aqnvp")
+theme_override_font_sizes/font_size = 199
+text = "towerist"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
