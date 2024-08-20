@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bt33bdsp31w32"]
+[gd_scene load_steps=4 format=3 uid="uid://bt33bdsp31w32"]
 
 [ext_resource type="Script" path="res://scenes/Enemies/enemy_spawn_manager.gd" id="1_ss13c"]
 [ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemies/Slime.tscn" id="2_2l6kw"]
+[ext_resource type="PackedScene" uid="uid://od7uf3tsidl" path="res://scenes/Enemies/bat.tscn" id="3_1x8aa"]
 
 [node name="EnemySpawnManager" type="Node"]
 script = ExtResource("1_ss13c")
 slime_scene = ExtResource("2_2l6kw")
-goblin_scene = ExtResource("2_2l6kw")
+bat_scene = ExtResource("3_1x8aa")

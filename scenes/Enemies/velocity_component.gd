@@ -5,6 +5,8 @@ class_name VelocityComponent
 @export var speed_horizontal: float
 @export var speed_vertical: float
 @export var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+@export var apply_gravity_flag: bool = true  # Default to true, but set to false for bats
+
 
 var velocity: Vector2 = Vector2.ZERO
 var parent: CharacterBody2D
@@ -15,7 +17,8 @@ func _ready():
 		push_error("VelocityComponent must be a child of a CharacterBody2D")
 
 func apply_gravity(delta: float):
-	velocity.y += gravity * delta
+	if apply_gravity_flag:
+		velocity.y += gravity * delta
 
 func move_horizontal(direction: float):
 	velocity.x = direction * speed_horizontal

@@ -35,4 +35,4 @@ func update_auto_button_text(is_auto: bool):
 	if is_auto:
 		auto_button.text = "Auto"
 	else:
-		auto_button.text = "Make Auto (20 G)"
+		auto_button.text = "Make Auto"

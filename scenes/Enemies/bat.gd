@@ -5,10 +5,10 @@ class_name Bat
 signal enemy_defeated(gold_value: int)
 signal enemy_reached_center(plunder_value: int)
 
-const SPEED = 20  # Customize the speed for the bat
-const MAX_HEALTH = 5
+const SPEED = 30  # Customize the speed for the bat
+const MAX_HEALTH = 30
 const GOLD_VALUE = 10
-const PLUNDER_VALUE = 3
+const PLUNDER_VALUE = 5
 const REACH_THRESHOLD = 15
 
 var target_position: Vector2  # This will be set to the castle center
@@ -21,10 +21,8 @@ var target_position: Vector2  # This will be set to the castle center
 func _ready():
 	add_to_group("enemies")
 	health_component.max_health = MAX_HEALTH
+	health_component.current_health = MAX_HEALTH
 	health_component.health_depleted.connect(_on_health_depleted)
-
-	# Customize VelocityComponent for this enemy type
-	velocity_component.set_speeds(SPEED, SPEED)
 	
 	# Set the target to be the center of the castle
 	if castle_node:
@@ -35,16 +33,23 @@ func _ready():
 
 func _physics_process(delta):
 	if not castle_node:
-		print("Error: no castle node associated with this bat")
 		return
 	
-	# Move directly towards the castle center
+	# Calculate direction to the castle center
+	target_position = castle_node.get_castle_center_position()
 	var direction = (target_position - global_position).normalized()
-	velocity_component.set_direction(direction)
-	velocity_component.apply_velocity()
+	
+	# Set the velocity using the direction and speed
+	velocity = direction * SPEED
+	
+	# Move the bat
+	move_and_slide()
 
 	# Check if bat reaches the castle center
-	if global_position.distance_to(target_position) < REACH_THRESHOLD:
+	if abs(global_position.x - castle_node.get_castle_center_x()) <= REACH_THRESHOLD:
+		print("Global position of bat: ", global_position)
+		print("Position of bat", position)
+		print("Castle node x", castle_node.get_castle_center_x())
 		emit_signal("enemy_reached_center", PLUNDER_VALUE)
 		queue_free()
 

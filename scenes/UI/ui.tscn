@@ -12,6 +12,7 @@ region = Rect2(100, 100, 0, 0)
 script = ExtResource("3_tprgb")
 name = "None"
 display_text = ""
+cost = 0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nkwry"]
 atlas = ExtResource("5_0pvlm")
@@ -19,13 +20,15 @@ region = Rect2(102, 26, 66, 38)
 script = ExtResource("3_tprgb")
 name = "Cannon"
 display_text = ""
+cost = 20
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7xb24"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_47k5i"]
 atlas = ExtResource("4_30ont")
-region = Rect2(0, 0, 133.445, 132.744)
+region = Rect2(0, 0, 132.744, 133.445)
 script = ExtResource("3_tprgb")
 name = "Crossbow"
 display_text = ""
+cost = 15
 
 [node name="Ui" type="Node"]
 
@@ -46,7 +49,8 @@ grow_vertical = 0
 text = "Player bought turret: []"
 
 [node name="SelectionWheel" parent="CanvasLayer" instance=ExtResource("1_wm5sk")]
-texture_filter = 1
-inner_radius = 16
-line_width = 2
-options = Array[ExtResource("3_tprgb")]([SubResource("AtlasTexture_0vn4k"), SubResource("AtlasTexture_nkwry"), SubResource("AtlasTexture_7xb24")])
+text_color = Color(1, 1, 1, 1)
+outer_radius = 48
+inner_radius = 8
+line_width = 1
+options = Array[ExtResource("3_tprgb")]([SubResource("AtlasTexture_0vn4k"), SubResource("AtlasTexture_nkwry"), SubResource("AtlasTexture_47k5i")])

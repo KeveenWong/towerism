@@ -4,8 +4,8 @@ signal enemy_defeated(gold_value: int)
 signal enemy_reached_center(plunder_value: int)
 
 
-const HORIZONTAL_SPEED = 50  # pixels per second
-const VERTICAL_SPEED = 50  # pixels per second
+const HORIZONTAL_SPEED = 15  # pixels per second
+const VERTICAL_SPEED = 15  # pixels per second
 const REACH_THRESHOLD = 10  # pixels
 const MAX_HEALTH = 10
 const GOLD_VALUE = 5
@@ -25,6 +25,7 @@ var initial_x_direction # 1 for right, -1 for left
 func _ready():
 	add_to_group("enemies")
 	health_component.max_health = MAX_HEALTH
+	health_component.current_health = MAX_HEALTH
 	health_component.health_depleted.connect(_on_health_depleted)
 	
 	# Customize VelocityComponent for this enemy type

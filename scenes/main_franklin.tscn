@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cf4lv0gklc2t2" path="res://scenes/player.tscn" id="7_xswan"]
 [ext_resource type="PackedScene" uid="uid://cfddndby1ecnx" path="res://scenes/Castle/castle.tscn" id="8_jvlbx"]
 [ext_resource type="PackedScene" uid="uid://btkj83hjtgka2" path="res://scenes/UI/ui.tscn" id="12_ys65o"]
-[ext_resource type="PackedScene" path="res://scenes/UI/hud.tscn" id="13_2ksaj"]
+[ext_resource type="PackedScene" uid="uid://bqcgxr3g1cb3" path="res://scenes/UI/hud.tscn" id="13_2ksaj"]
 [ext_resource type="PackedScene" uid="uid://bt33bdsp31w32" path="res://scenes/Enemies/enemy_spawn_manager.tscn" id="13_ms3if"]
 [ext_resource type="PackedScene" uid="uid://lwejfvrvb402" path="res://scenes/UI/selection_menu/SelectionMenu.tscn" id="14_dsvgj"]
 
