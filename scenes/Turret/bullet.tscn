@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://du3gthmuuaot"]
+[gd_scene load_steps=5 format=3 uid="uid://du3gthmuuaot"]
 
 [ext_resource type="Texture2D" uid="uid://jgalthho2fi7" path="res://assets/Trap and Weapon/SpikeBall.png" id="1_03hkt"]
 [ext_resource type="Script" path="res://scenes/Turret/bullet.gd" id="1_dxy4t"]
+[ext_resource type="AudioStream" uid="uid://cja4vjgb1vnjv" path="res://assets/sounds/hitHurt.wav" id="3_yquuu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ydl4"]
 
@@ -14,3 +15,7 @@ shape = SubResource("CircleShape2D_4ydl4")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_03hkt")
 hframes = 2
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yquuu")
+volume_db = -9.905

@@ -54,6 +54,7 @@ func add_floor(level: int):
 	floors[level] = new_floor
 	
 	instantiate_floor(new_floor)
+	$BuildTower.play()
 	update_castle_top_position()
 
 func instantiate_floor(floor: Floor):

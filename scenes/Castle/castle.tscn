@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfddndby1ecnx"]
+[gd_scene load_steps=6 format=3 uid="uid://cfddndby1ecnx"]
 
 [ext_resource type="Script" path="res://scripts/castle.gd" id="1_tpwo1"]
 [ext_resource type="PackedScene" uid="uid://b63xrtocpypx5" path="res://scenes/Castle/floor.tscn" id="2_asi6c"]
 [ext_resource type="PackedScene" uid="uid://commwmbqlcsjd" path="res://scenes/Castle/castle-top.tscn" id="3_eshcu"]
 [ext_resource type="PackedScene" uid="uid://vi6qia27ffsg" path="res://scenes/Particles/castle-particles.tscn" id="4_d1kr5"]
+[ext_resource type="AudioStream" uid="uid://chlgacbwa76gu" path="res://assets/sounds/buildTower.wav" id="5_qxfr8"]
 
 [node name="Castle" type="Node2D"]
 script = ExtResource("1_tpwo1")
@@ -20,3 +21,7 @@ highlight_color = Color(0, 1, 0, 0.3)
 [node name="CastleTop" parent="." instance=ExtResource("3_eshcu")]
 visibility_layer = 1
 position = Vector2(0, -97)
+
+[node name="BuildTower" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qxfr8")
+volume_db = -11.143

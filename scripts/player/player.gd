@@ -71,6 +71,7 @@ func apply_gravity(delta):
 
 func handle_jump():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		$Jump.play()
 		velocity.y = jump_velocity
 
 func handle_movement(delta, input_dir):
