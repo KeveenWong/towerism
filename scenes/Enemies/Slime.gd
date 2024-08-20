@@ -2,12 +2,16 @@ extends CharacterBody2D
 
 class_name Slime
 
-signal slime_killed
-signal reached_center
+signal enemy_defeated(gold_value: int)
+signal enemy_reached_center(plunder_value: int)
+
 
 const HORIZONTAL_SPEED = 50  # pixels per second
 const VERTICAL_SPEED = 50  # pixels per second
 const REACH_THRESHOLD = 10  # pixels
+const MAX_HEALTH = 10
+const GOLD_VALUE = 5
+const PLUNDER_VALUE = 2
 
 enum State { MOVING_HORIZONTAL, MOVING_UP, MOVING_TO_CENTER }
 
@@ -22,7 +26,7 @@ var initial_x_direction # 1 for right, -1 for left
 
 func _ready():
 	add_to_group("enemies")
-	health_component.max_health = 10
+	health_component.max_health = MAX_HEALTH
 	health_component.health_depleted.connect(_on_health_depleted)
 	
 	# Customize VelocityComponent for this enemy type
@@ -65,7 +69,7 @@ func _physics_process(delta):
 			
 			# Check if enemy is close enough to the center x
 			if abs(position.x - castle_center_x) < REACH_THRESHOLD:
-				emit_signal("reached_center")
+				emit_signal("enemy_reached_center", PLUNDER_VALUE)
 				queue_free()
 
 func hit(damage):
@@ -78,5 +82,5 @@ func get_speeds():
 	return [HORIZONTAL_SPEED, VERTICAL_SPEED]
 
 func _on_health_depleted():
-	emit_signal("slime_killed")
+	emit_signal("enemy_defeated", GOLD_VALUE)
 	queue_free()

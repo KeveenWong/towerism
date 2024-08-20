@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://cvcah0nx5b03c"]
 
-[ext_resource type="Script" path="res://scenes/Enemies/Slime.gd" id="1_7dvr5"]
-[ext_resource type="Texture2D" uid="uid://coqn2qhvfnook" path="res://assets/sprites/enemies/Slime/Slime_Spiked_Run.png" id="2_ikf5y"]
-[ext_resource type="Script" path="res://scenes/Enemies/HealthComponent.gd" id="3_03ed2"]
-[ext_resource type="Script" path="res://scenes/Enemies/VelocityComponent.gd" id="4_8oydu"]
+[ext_resource type="Script" path="res://scenes/Enemies/slime.gd" id="1_rrutu"]
+[ext_resource type="Texture2D" uid="uid://coqn2qhvfnook" path="res://assets/sprites/enemies/Slime/Slime_Spiked_Run.png" id="2_iv8yh"]
+[ext_resource type="Script" path="res://scenes/Enemies/health_component.gd" id="3_cwtwj"]
+[ext_resource type="Script" path="res://scenes/Enemies/velocity_component.gd" id="4_b467r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m3rx8"]
 radius = 11.0
@@ -20,7 +20,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_ikf5y")]
+"values": [ExtResource("2_iv8yh")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -50,7 +50,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_ikf5y")]
+"values": [ExtResource("2_iv8yh")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -72,10 +72,10 @@ _data = {
 }
 
 [node name="Enemy" type="CharacterBody2D"]
-script = ExtResource("1_7dvr5")
+script = ExtResource("1_rrutu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_ikf5y")
+texture = ExtResource("2_iv8yh")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -89,7 +89,7 @@ libraries = {
 autoplay = "run"
 
 [node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("3_03ed2")
+script = ExtResource("3_cwtwj")
 
 [node name="VelocityComponent" type="Node" parent="."]
-script = ExtResource("4_8oydu")
+script = ExtResource("4_b467r")

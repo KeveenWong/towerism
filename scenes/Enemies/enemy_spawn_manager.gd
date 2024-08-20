@@ -20,7 +20,6 @@ func _ready():
 		
 		SPAWN_LEFT = CASTLE_LOCATION_X - (1280 / 3)  # Assuming 1280 is your screen width
 		SPAWN_RIGHT = CASTLE_LOCATION_X + (1280 / 3)
-		print("Slime scene", slime_scene)
 	else:
 		print("Error: Castle node not found!")
 
@@ -48,12 +47,12 @@ func calculate_spawn_position():
 
 func spawn_enemy(enemy_type: String, position: Vector2):
 	var enemy
-	print("Is there slime scene", slime_scene)
 	match enemy_type:
 		"slime":
 			enemy = slime_scene.instantiate()
 		"goblin":
 			enemy = goblin_scene.instantiate() if goblin_scene else slime_scene.instantiate()
+			# TODO: Add signal
 	
 	enemy.position = position
 	enemy.castle_node = get_parent().get_node("Castle")
@@ -72,5 +71,6 @@ func spawn_enemy(enemy_type: String, position: Vector2):
 
 	velocity_component.set_speeds(actual_speed_x, actual_speed_y)
 	
-	enemy.connect("slime_killed", Callable(get_parent(), "_on_slime_killed"))
+	enemy.connect("enemy_defeated", Callable(get_parent(), "_on_enemy_defeated"))
+	enemy.connect("enemy_reached_center", Callable(get_parent(), "_on_enemy_reached_center"))
 	get_parent().add_child(enemy)

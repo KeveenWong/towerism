@@ -1,6 +1,7 @@
 extends Node2D
 
-var money = 0
+var scales = 150
+var money = 20
 var score = 0
 
 @export var slime_scene: PackedScene
@@ -9,6 +10,7 @@ var score = 0
 @onready var selection_ui = $Ui/CanvasLayer
 @onready var castle = $Castle
 @onready var enemy_spawn_manager = $EnemySpawnManager
+@onready var HUD = $HUD
 
 const SCREEN_WIDTH = 1280
 const SCREEN_HEIGHT = 720
@@ -30,12 +32,25 @@ func _ready():
 		print("Error: Castle node not found!")
 	
 	$EnemyTimer.start()
+	$ScoreTimer.start()
+	HUD.update_scales(scales)
+	HUD.update_money(money)
+	HUD.update_score(score)
 
-func _on_slime_killed():
-	score += 1
+func _on_enemy_defeated(gold_value: int):
+	print("Enemy killed and gained: ", gold_value)
+	money += gold_value
+	HUD.update_money(money)
+
+
+func _on_enemy_reached_center(plunder_value: int):
+	print("Enemy reached and plundered: ", plunder_value)
+	scales -= plunder_value
+	HUD.update_scales(scales)
 
 func _on_score_timer_timeout() -> void:
 	score += 1
+	HUD.update_score(score)
 
 func _on_enemy_timer_timeout() -> void:
 	enemy_spawn_manager.spawn_random_enemy()
@@ -47,7 +62,7 @@ func hide_selection_wheel():
 	selection_ui.hide_wheel()
 
 func place_turret(turret_type: String, side: String):
-	var turret_cost = 0  # Set the cost of the turret
+	var turret_cost = 10  # Set the cost of the turret
 	
 	if money >= turret_cost:
 		var turret_scene_to_use = turret_types.get(turret_type, turret_scene)
@@ -87,6 +102,7 @@ func place_turret(turret_type: String, side: String):
 			placed_turrets[window_key] = turret
 			
 			money -= turret_cost
+			HUD.update_money(money)
 			print("Placing turret: " + turret_type + " at position: " + str(window_position))
 		else:
 			print("Error: Turret type '" + turret_type + "' not found.")

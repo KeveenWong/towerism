@@ -1,8 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://fhjpepkdi0ab"]
+[gd_scene load_steps=15 format=3 uid="uid://fhjpepkdi0ab"]
 
 [ext_resource type="Script" path="res://scenes/main_franklin.gd" id="1_bp433"]
 [ext_resource type="Texture2D" uid="uid://cfsknewl1umgt" path="res://assets/sprites/background/sky background.png" id="1_i27bk"]
-[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemies/Slime.tscn" id="2_gihbq"]
+[ext_resource type="PackedScene" uid="uid://cvcah0nx5b03c" path="res://scenes/Enemies/slime.tscn" id="2_gihbq"]
 [ext_resource type="Texture2D" uid="uid://4xpc4h3kxtxy" path="res://assets/sprites/background/clouds-x3.png" id="2_hbjf4"]
 [ext_resource type="Texture2D" uid="uid://r5e1h18qsf5w" path="res://assets/sprites/background/mountain_x3.png" id="3_cgs4n"]
 [ext_resource type="Texture2D" uid="uid://d1rx1rn8p6pu0" path="res://assets/sprites/background/far_woods_x3.png" id="4_1xtdy"]
@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cf4lv0gklc2t2" path="res://scenes/player.tscn" id="7_xswan"]
 [ext_resource type="PackedScene" uid="uid://cfddndby1ecnx" path="res://scenes/Castle/castle.tscn" id="8_jvlbx"]
 [ext_resource type="PackedScene" uid="uid://btkj83hjtgka2" path="res://scenes/UI/ui.tscn" id="12_ys65o"]
-[ext_resource type="PackedScene" uid="uid://bt33bdsp31w32" path="res://scenes/Enemies/EnemySpawnManager.tscn" id="13_ms3if"]
+[ext_resource type="PackedScene" uid="uid://bqcgxr3g1cb3" path="res://scenes/UI/hud.tscn" id="13_2ksaj"]
+[ext_resource type="PackedScene" uid="uid://bt33bdsp31w32" path="res://scenes/Enemies/enemy_spawn_manager.tscn" id="13_ms3if"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4byv"]
 size = Vector2(2212, 66)
@@ -92,11 +93,16 @@ position = Vector2(840, 87)
 [node name="Castle" parent="." instance=ExtResource("8_jvlbx")]
 position = Vector2(841, 125)
 
-[node name="EnemyTimer" type="Timer" parent="."]
-wait_time = 2.0
-
 [node name="Ui" parent="." instance=ExtResource("12_ys65o")]
 
 [node name="EnemySpawnManager" parent="." instance=ExtResource("13_ms3if")]
 
+[node name="HUD" parent="." instance=ExtResource("13_2ksaj")]
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
